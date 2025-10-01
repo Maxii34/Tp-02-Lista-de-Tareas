@@ -1,10 +1,12 @@
-import { Footer, Menu } from "../index";
+import { Footer, Menu, GestorTareas } from "../index";
 
 export const Inicio = () => {
   return (
     <>
       <Menu />
-      <main className="my-4"></main>
+      <main className="container-fluid my-4">
+        <GestorTareas />
+      </main>
       <Footer />
     </>
   );
