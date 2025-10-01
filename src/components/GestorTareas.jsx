@@ -14,9 +14,9 @@ export const GestorTareas = () => {
       <Row className="justify-content-center">
         {/* Columna izquierda */}
         <Col xs={12} md={4} lg={4} className="my-2">
-          <Card className="shadow mb-4 rounded-2">
+          <Card className="shadow mb-4 rounded-2 columna1 tarjeta css p-2">
             {/* Card de entrada */}
-            <Card className="shadow mb-4 rounded-4">
+            <Card className="mb-4 rounded-2 css">
               <Card.Body className="p-4">
                 <div className="d-flex align-items-center justify-content-between mb-3">
                   <span className="h5 text-light">

@@ -1,13 +1,14 @@
 import { Card, Button, ListGroup } from "react-bootstrap";
+import {} from "./TareasCards"
 
 export const Tablero = () => {
   return (
     <>
       <Card className="shadow tarjeta">
         {/* Header */}
-        <Card.Header className="text-white d-flex justify-content-between align-items-center">
+        <Card.Header className="text-white d-flex justify-content-between align-items-center css">
           <h3 className="mb-0">
-            <i className="bi bi-card-checklist"></i> Mi tablero
+            <i className="bi bi-card-checklist"></i> Tablero
           </h3>
           <Button variant="danger" size="sm" className="shadow">
             <i className="bi bi-trash"></i>
