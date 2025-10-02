@@ -2,8 +2,15 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from 'uuid';
 
-export const GestorTareas = ({ tareas, setTareas }) => {
+export const GestorTareas = ({
+  tareas,
+  setTareas,
+  setTareaSeleccionada,
+  handleShow,
+  handleShowEditar,
+}) => {
   const {
     register,
     handleSubmit,
@@ -14,6 +21,7 @@ export const GestorTareas = ({ tareas, setTareas }) => {
   const onSubmit = (data) => {
     if (data.titulo.trim() && data.descripcion.trim()) {
       const nuevaTarea = {
+        id: uuidv4(),
         ...data,
         fecha: new Date().toLocaleDateString(),
         hora: new Date().toLocaleTimeString(),
@@ -129,7 +137,12 @@ export const GestorTareas = ({ tareas, setTareas }) => {
 
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
-          <Tablero tareas={tareas} />
+          <Tablero
+            tareas={tareas}
+            setTareaSeleccionada={setTareaSeleccionada}
+            handleShow={handleShow}
+            handleShowEditar={handleShowEditar}
+          />
         </Col>
       </Row>
     </section>
