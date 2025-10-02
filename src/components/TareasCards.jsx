@@ -64,7 +64,7 @@ export const TareasCards = ({
           <b>Titulo</b>: {itemTarea.titulo}
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          <b>Descripcion</b>: {itemTarea.descripcion}
+          <b>Descripcion</b>: <br /> {itemTarea.descripcion}
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
