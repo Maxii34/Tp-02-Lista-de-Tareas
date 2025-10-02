@@ -5,3 +5,4 @@ export * from "./shared/menu";
 export * from "../components/GestorTareas";
 export * from "../components/Tablero";
 export * from "../components/TareasCards";
+export * from "../components/ModalTarea"

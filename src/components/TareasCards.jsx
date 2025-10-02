@@ -1,7 +1,8 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
-export const TareasCards = ({ itemTarea }) => {
+
+export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow }) => {
   const Estados = ({ estado }) => {
     switch (estado) {
       case "Creada":
@@ -43,6 +44,12 @@ export const TareasCards = ({ itemTarea }) => {
     }
   };
 
+const openModal = () => {
+  setTareaSeleccionada(itemTarea);
+  handleShow();
+};
+
+
   return (
     <Card className="shadow w-100 my-1">
       <Card.Body>
@@ -72,10 +79,10 @@ export const TareasCards = ({ itemTarea }) => {
           >
             <i className="bi bi-check-circle"></i>
           </Button>
-          <Button variant="info" size="sm" className="me-2">
+          <Button variant="info" size="sm" className="me-2" onClick={openModal}>
             <i className="bi bi-eye"></i>
           </Button>
-          <Button variant="primary" size="sm" className="me-2">
+          <Button variant="primary" size="sm" className="me-2"> 
             <i className="bi bi-pencil"></i>
           </Button>
           <Button variant="danger" size="sm">

@@ -3,7 +3,7 @@ import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-export const GestorTareas = ({ tareas, setTareas }) => {
+export const GestorTareas = ({ tareas, setTareas, setTareaSeleccionada, handleShow }) => {
   const {
     register,
     handleSubmit,
@@ -129,7 +129,7 @@ export const GestorTareas = ({ tareas, setTareas }) => {
 
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
-          <Tablero tareas={tareas} />
+          <Tablero tareas={tareas} setTareaSeleccionada={setTareaSeleccionada} handleShow={handleShow} />
         </Col>
       </Row>
     </section>
