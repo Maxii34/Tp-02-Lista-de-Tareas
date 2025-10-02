@@ -1,14 +1,21 @@
-import {
-  Row,
-  Col,
-  Card,
-  Form,
-  InputGroup,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
+import { useForm } from "react-hook-form";
 
 export const GestorTareas = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // Aquí puedes agregar la lógica para crear una nueva tarea
+    reset();
+  };
+
   return (
     <section>
       <Row className="justify-content-center">
@@ -23,31 +30,66 @@ export const GestorTareas = () => {
                     <i className="bi bi-inboxes"></i> Bandeja De Entrada
                   </span>
                 </div>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  {/* Input título */}
+                  <InputGroup>
+                    <Form.Control
+                      type="text"
+                      placeholder="Introduce el titulo..."
+                      {...register("titulo", {
+                        required: "El titulo es obligatorio",
+                        minLength: {
+                          value: 5,
+                          message: "El titulo debe tener al menos 5 caracteres",
+                        },
+                        maxLength: {
+                          value: 20,
+                          message: "El titulo no debe superar los 20 caracteres",
+                        },
+                      })}
+                    />
+                  </InputGroup>
+                  {errors.titulo && (
+                    <Form.Text className="text-danger">
+                      {errors.titulo.message}
+                    </Form.Text>
+                  )}
 
-                {/* Input título */}
-                <InputGroup>
-                  <Form.Control
-                    type="text"
-                    placeholder="Introduce el titulo..."
-                    minLength={3}
-                    maxLength={50}
-                    aria-label="Nueva tarea"
-                  />
-                  <Button variant="info" size="sm" className="shadow">
+                  {/* Textarea descripción */}
+                  <InputGroup className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      rows={2}
+                      placeholder="Añadí la Descripción..."
+                      {...register("descripcion", {
+                        required: "La descripción es obligatoria",
+                        minLength: {
+                          value: 5,
+                          message:
+                            "La descripción debe tener al menos 5 caracteres",
+                        },
+                        maxLength: {
+                          value: 100,
+                          message:
+                            "La descripción no debe superar los 100 caracteres",
+                        },
+                      })}
+                    />
+                  </InputGroup>
+                  {errors.descripcion && (
+                    <Form.Text className="text-danger">
+                      {errors.descripcion.message}
+                    </Form.Text>
+                  )}
+                  <Button
+                    variant="info"
+                    size="sm"
+                    className="shadow mt-2"
+                    type="submit"
+                  >
                     <i className="bi bi-list-task"></i> Añadir
                   </Button>
-                </InputGroup>
-
-                {/* Textarea descripción */}
-                <InputGroup className="mt-2">
-                  <Form.Control
-                    as="textarea"
-                    rows={2}
-                    minLength={5}
-                    maxLength={200}
-                    placeholder="Añadí la Descripción..."
-                  />
-                </InputGroup>
+                </Form>
               </Card.Body>
             </Card>
 
