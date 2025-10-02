@@ -4,7 +4,7 @@ export const Inicio = () => {
   return (
     <>
       <Menu />
-      <main className="container-fluid my-4">
+      <main className="container-fluid my-3">
         <GestorTareas />
       </main>
       <Footer />

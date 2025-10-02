@@ -1,4 +1,4 @@
-import { Inicio, Bienvenido, Footer, Menu} from "./components/index"
+import { Inicio, Bienvenido } from "./components/index"
 
 function App() {
 
