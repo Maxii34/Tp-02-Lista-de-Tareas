@@ -1,4 +1,4 @@
-import { Card, Button, ListGroup, Row, Col } from "react-bootstrap";
+import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
 
 export const Tablero = ({ tareas }) => {
