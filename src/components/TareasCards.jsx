@@ -48,6 +48,11 @@ const openModal = () => {
   setTareaSeleccionada(itemTarea);
   handleShow();
 };
+const openModalEditar = () => {
+  setTareaSeleccionada(itemTarea);
+  handleShow();
+};
+
 
 
   return (
@@ -82,7 +87,7 @@ const openModal = () => {
           <Button variant="info" size="sm" className="me-2" onClick={openModal}>
             <i className="bi bi-eye"></i>
           </Button>
-          <Button variant="primary" size="sm" className="me-2"> 
+          <Button variant="primary" size="sm" className="me-2" onClick={openModalEditar}> 
             <i className="bi bi-pencil"></i>
           </Button>
           <Button variant="danger" size="sm">

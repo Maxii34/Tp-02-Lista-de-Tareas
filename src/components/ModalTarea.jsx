@@ -11,11 +11,9 @@ export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
         <Modal.Body>
           Descripcion: {tareaSeleccionada.descripcion} <br />
           <samp className="text-muted">
-            Fecha de creacion: {tareaSeleccionada.fecha}{" "}
+            Fecha de creacion: {tareaSeleccionada.fecha}
             {tareaSeleccionada.hora}
           </samp>
-          <br />
-          <span className="text-muted">Fecha de modificacion: Card Text</span>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

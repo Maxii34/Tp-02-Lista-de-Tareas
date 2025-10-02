@@ -3,7 +3,8 @@ import {
   Inicio,
   Bienvenido,
   TareasCards,
-  ModalTarea,
+  ModalTarea, 
+  ModalEditar,
 } from "./components/index";
 
 function App() {
@@ -16,11 +17,12 @@ function App() {
   useEffect(() => {
     localStorage.setItem("tareasKey", JSON.stringify(tareas));
   }, [tareas]);
-  //Se creo el estado para la tarea, se guarda en local estorage y useEffect actualiza el localstorage solo si ve cambios en el estado tareas. y tareas inicia con lo que tenga tarea en el localstorage... fin => XD
+  //Se creo el estado para la tarea, se guarda en local estorage y useEffect actualiza el localstorage solo si ve cambios en el estado tareas. y tareas inicia con lo que tenga cargado tarea en el localstorage... fin => XD
 
   const [tareaSeleccionada, setTareaSeleccionada] = useState([]);
 
   const [show, setShow] = useState(false);
+  const [showEditar, setShowEditar] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -32,9 +34,11 @@ function App() {
         setTareas={setTareas}
         setTareaSeleccionada={setTareaSeleccionada}
         handleShow={handleShow}
+        
       />
       <Bienvenido />
       <ModalTarea handleClose={handleClose} show={show} tareaSeleccionada={tareaSeleccionada} />
+      <ModalEditar handleClose={handleClose} show={showEditar} tareaSeleccionada={tareaSeleccionada} actualizarTarea={setTareaSeleccionada} />
     </>
   );
 }
