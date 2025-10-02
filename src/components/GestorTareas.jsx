@@ -1,18 +1,31 @@
 import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
-export const GestorTareas = () => {
+export const GestorTareas = ({ tareas, setTareas }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Aquí puedes agregar la lógica para crear una nueva tarea
+    if (data.titulo.trim() && data.descripcion.trim()) {
+      setTareas([...tareas, data]);
+      Swal.fire({
+        title: `¡Creaste una tarea!`,
+        text: "Has creado una tarea con éxito.",
+        icon: "success",
+      });
+    } else {
+      Swal.fire({
+        title: "Error al crear la tarea",
+        text: "Titulo o descripción no válidos.",
+        icon: "error",
+      });
+    }
     reset();
   };
 
@@ -44,7 +57,8 @@ export const GestorTareas = () => {
                         },
                         maxLength: {
                           value: 20,
-                          message: "El titulo no debe superar los 20 caracteres",
+                          message:
+                            "El titulo no debe superar los 20 caracteres",
                         },
                       })}
                     />
