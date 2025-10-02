@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 
-export const ModalEditar = ({ show, handleClose, tareaSeleccionada, actualizarTarea }) => {
+
+export const ModalEditar = ({
+  show,
+  handleClose,
+  tareaSeleccionada,
+  actualizarTarea,
+}) => {
+  //Estados locales para manejar la edición
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
-  // Cada vez que cambie la tarea seleccionada, actualizamos los inputs
+  //useEffect para cargar los datos de la tarea seleccionada al abrir el modal
   useEffect(() => {
     if (tareaSeleccionada) {
       setTitulo(tareaSeleccionada.titulo);
@@ -14,9 +22,13 @@ export const ModalEditar = ({ show, handleClose, tareaSeleccionada, actualizarTa
     }
   }, [tareaSeleccionada]);
 
-  const handleGuardar = () => {
-    // Creamos un objeto actualizado y llamamos a la función del padre
-    actualizarTarea({ ...tareaSeleccionada, titulo, descripcion });
+  const guardarTareaEditada = () => {
+    const tareaActualizada = {
+      id: tareaSeleccionada.id,
+      titulo: titulo, 
+      descripcion: descripcion, 
+    };
+    actualizarTarea(tareaActualizada);
     handleClose();
   };
 
@@ -41,10 +53,10 @@ export const ModalEditar = ({ show, handleClose, tareaSeleccionada, actualizarTa
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="danger" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleGuardar}>
+        <Button variant="success" onClick={guardarTareaEditada}>
           Guardar
         </Button>
       </Modal.Footer>

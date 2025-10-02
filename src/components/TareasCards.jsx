@@ -60,16 +60,14 @@ const openModalEditar = () => {
   return (
     <Card className="shadow w-100 my-1">
       <Card.Body>
-        <Card.Title>Titulo: {itemTarea.titulo}</Card.Title>
+        <Card.Title> <b>Titulo</b>: {itemTarea.titulo}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          Descripcion: {itemTarea.descripcion}
+          <b>Descripcion</b>: {itemTarea.descripcion}
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
-            Fecha: {itemTarea.fecha} {itemTarea.hora}
+            <b>Creado</b>: {itemTarea.fecha} {itemTarea.hora}
           </samp>
-          <br />
-          <span className="text-muted">Fecha de modificacion: Card Text</span>
         </Card.Text>
       </Card.Body>
       <CardFooter className="d-flex justify-content-between align-items-center">

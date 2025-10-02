@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Inicio,
   Bienvenido,
-  TareasCards,
   ModalTarea,
   ModalEditar,
 } from "./components/index";
@@ -19,15 +18,27 @@ function App() {
   }, [tareas]);
   //Se creo el estado para la tarea, se guarda en local estorage y useEffect actualiza el localstorage solo si ve cambios en el estado tareas. y tareas inicia con lo que tenga cargado tarea en el localstorage... fin => XD
 
-  const [tareaSeleccionada, setTareaSeleccionada] = useState([]);
+  const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const [showEditar, setShowEditar] = useState(false);
   const handleCloseEditar = () => setShowEditar(false);
   const handleShowEditar = () => setShowEditar(true);
+
+  const modificarTarea = (tareaEditada) => {
+    setTareas(
+      tareas.map((tarea) => {
+        if (tarea.id === tareaEditada.id) {
+          return tareaEditada;
+        }
+        return tarea;
+      })
+    );
+    setTareaSeleccionada(null);
+  };
 
   return (
     <>
@@ -49,7 +60,7 @@ function App() {
         handleClose={handleCloseEditar}
         show={showEditar}
         tareaSeleccionada={tareaSeleccionada}
-        actualizarTarea={setTareaSeleccionada}
+        actualizarTarea={modificarTarea}
       />
     </>
   );
