@@ -1,10 +1,11 @@
-
+import { Inicio, Bienvenido } from "./components/index"
 
 function App() {
 
   return (
     <>
-      
+      <Inicio />
+      <Bienvenido />
     </>
   )
 }
