@@ -56,9 +56,9 @@ export const GestorTareas = ({ tareas, setTareas }) => {
                           message: "El titulo debe tener al menos 5 caracteres",
                         },
                         maxLength: {
-                          value: 20,
+                          value: 25,
                           message:
-                            "El titulo no debe superar los 20 caracteres",
+                            "El titulo no debe superar los 25 caracteres",
                         },
                       })}
                     />
