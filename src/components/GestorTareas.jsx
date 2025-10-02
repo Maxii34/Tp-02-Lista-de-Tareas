@@ -66,7 +66,6 @@ export const GestorTareas = () => {
 
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
-          {/* Aquí podrías seguir con más contenido */}
           <Tablero />
         </Col>
       </Row>

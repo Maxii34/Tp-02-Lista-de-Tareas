@@ -1,5 +1,6 @@
-import { Card, Button, ListGroup } from "react-bootstrap";
-import {} from "./TareasCards"
+import { Card, Button, ListGroup, Row, Col } from "react-bootstrap";
+import { TareasCards } from "./TareasCards"
+
 
 export const Tablero = () => {
   return (
@@ -22,7 +23,23 @@ export const Tablero = () => {
 
         {/* Cuerpo con lista */}
         <Card.Body className="tablero-bajo">
-          <ListGroup>{/* Aquí se añadirían tareas dinámicamente */}</ListGroup>
+          <Row>
+            <Col xs={12} md={6} lg={6}>
+              <TareasCards />
+            </Col>
+            <Col xs={12} md={6} lg={6}>
+              <TareasCards />
+            </Col>
+            <Col xs={12} md={6} lg={6}>
+              <TareasCards />
+            </Col>
+            <Col xs={12} md={6} lg={6}>
+              <TareasCards />
+            </Col>
+          </Row>
+          <ListGroup>
+          
+          </ListGroup>
 
           {/* Mensaje vacío */}
           <ListGroup.Item className="text-center text-muted bg-light-subtle rounded-3 mt-2">
