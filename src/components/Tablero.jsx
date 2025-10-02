@@ -2,7 +2,7 @@ import { Card, Button, ListGroup, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards"
 
 
-export const Tablero = () => {
+export const Tablero = ({ tareas }) => {
   return (
     <>
       <Card className="shadow tarjeta">
@@ -24,18 +24,11 @@ export const Tablero = () => {
         {/* Cuerpo con lista */}
         <Card.Body className="tablero-bajo">
           <Row>
-            <Col xs={12} md={6} lg={6}>
-              <TareasCards />
+            {tareas.map((itemTarea, index) => (
+              <Col xs={12} md={6} lg={6} key={index}>
+              <TareasCards itemTarea={itemTarea} />
             </Col>
-            <Col xs={12} md={6} lg={6}>
-              <TareasCards />
-            </Col>
-            <Col xs={12} md={6} lg={6}>
-              <TareasCards />
-            </Col>
-            <Col xs={12} md={6} lg={6}>
-              <TareasCards />
-            </Col>
+              ))}
           </Row>
           <ListGroup>
           

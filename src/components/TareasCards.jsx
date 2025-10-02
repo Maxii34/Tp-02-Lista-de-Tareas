@@ -1,16 +1,22 @@
 import { Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
-export const TareasCards = () => {
+export const TareasCards = ({ itemTarea }) => {
   return (
     <Card className="shadow w-100 my-1">
       <Card.Body>
-        <Card.Title>Titulo: Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Descripcion: Card Subtitle</Card.Subtitle>
+        <Card.Title>Titulo: {itemTarea.titulo}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          Descripcion: {itemTarea.descripcion}
+        </Card.Subtitle>
         <Card.Text>
-        Fecha de creacion: Card Text
-        <br />
-        Fecha de modificacion: Card Text
+          <samp className="text-muted">
+            Fecha: {itemTarea.fecha} {itemTarea.hora}
+          </samp>
+          <br />
+          <span className="text-muted">
+          Fecha de modificacion: Card Text
+          </span>
         </Card.Text>
       </Card.Body>
       <CardFooter className="d-flex justify-content-end">

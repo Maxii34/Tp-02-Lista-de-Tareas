@@ -13,7 +13,12 @@ export const GestorTareas = ({ tareas, setTareas }) => {
 
   const onSubmit = (data) => {
     if (data.titulo.trim() && data.descripcion.trim()) {
-      setTareas([...tareas, data]);
+      const nuevaTarea = {
+        ...data,
+        fecha: new Date().toLocaleDateString(), 
+        hora: new Date().toLocaleTimeString(), 
+      };
+      setTareas([...tareas, nuevaTarea]);
       Swal.fire({
         title: `¡Creaste una tarea!`,
         text: "Has creado una tarea con éxito.",
@@ -122,7 +127,7 @@ export const GestorTareas = ({ tareas, setTareas }) => {
 
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
-          <Tablero />
+          <Tablero tareas={tareas} />
         </Col>
       </Row>
     </section>
