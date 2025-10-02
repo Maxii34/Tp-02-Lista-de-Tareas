@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export const ModalEditar = ({ showEditar, handleClose, tareaSeleccionada, actualizarTarea }) => {
+export const ModalEditar = ({ show, handleClose, tareaSeleccionada, actualizarTarea }) => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
@@ -21,7 +21,7 @@ export const ModalEditar = ({ showEditar, handleClose, tareaSeleccionada, actual
   };
 
   return (
-    <Modal show={showEditar} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Editar tarea</Modal.Title>
       </Modal.Header>

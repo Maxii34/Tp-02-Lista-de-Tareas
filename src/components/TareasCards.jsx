@@ -2,7 +2,7 @@ import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
 
-export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow }) => {
+export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow, handleShowEditar }) => {
   const Estados = ({ estado }) => {
     switch (estado) {
       case "Creada":
@@ -46,11 +46,13 @@ export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow }) => 
 
 const openModal = () => {
   setTareaSeleccionada(itemTarea);
+  console.log(itemTarea);
   handleShow();
 };
 const openModalEditar = () => {
   setTareaSeleccionada(itemTarea);
-  handleShow();
+  console.log(itemTarea);
+  handleShowEditar();
 };
 
 

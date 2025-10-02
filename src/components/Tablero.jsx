@@ -1,7 +1,7 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
 
-export const Tablero = ({ tareas, setTareaSeleccionada, handleShow }) => {
+export const Tablero = ({ tareas, setTareaSeleccionada, handleShow, handleShowEditar }) => {
   return (
     <>
       <Card className="shadow tarjeta">
@@ -29,6 +29,7 @@ export const Tablero = ({ tareas, setTareaSeleccionada, handleShow }) => {
                     itemTarea={itemTarea}
                     setTareaSeleccionada={setTareaSeleccionada}
                     handleShow={handleShow}
+                    handleShowEditar={handleShowEditar}
                   />
                 </Col>
               ))}

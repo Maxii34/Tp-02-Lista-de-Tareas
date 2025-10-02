@@ -3,7 +3,7 @@ import {
   Inicio,
   Bienvenido,
   TareasCards,
-  ModalTarea, 
+  ModalTarea,
   ModalEditar,
 } from "./components/index";
 
@@ -22,10 +22,12 @@ function App() {
   const [tareaSeleccionada, setTareaSeleccionada] = useState([]);
 
   const [show, setShow] = useState(false);
-  const [showEditar, setShowEditar] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const [showEditar, setShowEditar] = useState(false);
+  const handleCloseEditar = () => setShowEditar(false);
+  const handleShowEditar = () => setShowEditar(true);
 
   return (
     <>
@@ -34,11 +36,21 @@ function App() {
         setTareas={setTareas}
         setTareaSeleccionada={setTareaSeleccionada}
         handleShow={handleShow}
-        
+        handleShowEditar={handleShowEditar}
       />
       <Bienvenido />
-      <ModalTarea handleClose={handleClose} show={show} tareaSeleccionada={tareaSeleccionada} />
-      <ModalEditar handleClose={handleClose} show={showEditar} tareaSeleccionada={tareaSeleccionada} actualizarTarea={setTareaSeleccionada} />
+      {/*Modales de ver y editar*/}
+      <ModalTarea
+        handleClose={handleClose}
+        show={show}
+        tareaSeleccionada={tareaSeleccionada}
+      />
+      <ModalEditar
+        handleClose={handleCloseEditar}
+        show={showEditar}
+        tareaSeleccionada={tareaSeleccionada}
+        actualizarTarea={setTareaSeleccionada}
+      />
     </>
   );
 }
