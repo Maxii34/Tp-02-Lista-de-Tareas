@@ -1,6 +1,5 @@
 import { Card, Button, ListGroup, Row, Col } from "react-bootstrap";
-import { TareasCards } from "./TareasCards"
-
+import { TareasCards } from "./TareasCards";
 
 export const Tablero = ({ tareas }) => {
   return (
@@ -21,26 +20,22 @@ export const Tablero = ({ tareas }) => {
           <p className="m-0">Bienvenido a tu organizador de tareas ✨</p>
         </div>
 
-        {/* Cuerpo con lista */}
         <Card.Body className="tablero-bajo">
-          <Row>
-            {tareas.map((itemTarea, index) => (
-              <Col xs={12} md={6} lg={6} key={index}>
-              <TareasCards itemTarea={itemTarea} />
-            </Col>
+          {tareas.length > 0 ? (
+            <Row>
+              {tareas.map((itemTarea, index) => (
+                <Col xs={12} md={6} lg={6} key={index}>
+                  <TareasCards itemTarea={itemTarea} />
+                </Col>
               ))}
-          </Row>
-          <ListGroup>
-          
-          </ListGroup>
-
-          {/* Mensaje vacío */}
-          <ListGroup.Item className="text-center text-muted bg-light-subtle rounded-3 mt-2">
-            <p className="my-1 d-flex justify-content-center">
+            </Row>
+          ) : (
+            //Mensaje si no hay tareas
+            <span className="my-1 d-flex justify-content-center">
               <i className="bi bi-arrow-down-short fs-5"></i> No hay tareas
               pendientes <i className="bi bi-arrow-down-short fs-5"></i>
-            </p>
-          </ListGroup.Item>
+            </span>
+          )}
         </Card.Body>
       </Card>
 

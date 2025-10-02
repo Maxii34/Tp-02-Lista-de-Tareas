@@ -15,8 +15,8 @@ export const GestorTareas = ({ tareas, setTareas }) => {
     if (data.titulo.trim() && data.descripcion.trim()) {
       const nuevaTarea = {
         ...data,
-        fecha: new Date().toLocaleDateString(), 
-        hora: new Date().toLocaleTimeString(), 
+        fecha: new Date().toLocaleDateString(),
+        hora: new Date().toLocaleTimeString(),
       };
       setTareas([...tareas, nuevaTarea]);
       Swal.fire({
@@ -100,14 +100,16 @@ export const GestorTareas = ({ tareas, setTareas }) => {
                       {errors.descripcion.message}
                     </Form.Text>
                   )}
-                  <Button
-                    variant="info"
-                    size="sm"
-                    className="shadow mt-2"
-                    type="submit"
-                  >
-                    <i className="bi bi-list-task"></i> Añadir
-                  </Button>
+                  <div className="d-flex justify-content-end">
+                    <Button
+                      variant="info"
+                      size="sm"
+                      className="shadow mt-2"
+                      type="submit"
+                    >
+                      <i className="bi bi-list-task"></i> Añadir tarea
+                    </Button>
+                  </div>
                 </Form>
               </Card.Body>
             </Card>
