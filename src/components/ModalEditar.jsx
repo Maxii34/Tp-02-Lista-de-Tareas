@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
 
-
 export const ModalEditar = ({
   show,
   handleClose,
@@ -23,10 +22,17 @@ export const ModalEditar = ({
   }, [tareaSeleccionada]);
 
   const guardarTareaEditada = () => {
+    const fechaActualizacion = new Date().toLocaleDateString();
+    const horaActualizacion = new Date().toLocaleTimeString();
+
     const tareaActualizada = {
       id: tareaSeleccionada.id,
-      titulo: titulo, 
-      descripcion: descripcion, 
+      titulo: titulo,
+      descripcion: descripcion,
+      fecha: tareaSeleccionada.fecha,
+      hora: tareaSeleccionada.hora,
+      fechaEdicion: fechaActualizacion,
+      horaEdicion: horaActualizacion,
     };
     actualizarTarea(tareaActualizada);
     handleClose();

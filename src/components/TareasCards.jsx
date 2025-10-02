@@ -1,8 +1,12 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
-
-export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow, handleShowEditar }) => {
+export const TareasCards = ({
+  itemTarea,
+  setTareaSeleccionada,
+  handleShow,
+  handleShowEditar,
+}) => {
   const Estados = ({ estado }) => {
     switch (estado) {
       case "Creada":
@@ -44,29 +48,31 @@ export const TareasCards = ({ itemTarea, setTareaSeleccionada, handleShow, handl
     }
   };
 
-const openModal = () => {
-  setTareaSeleccionada(itemTarea);
-  console.log(itemTarea);
-  handleShow();
-};
-const openModalEditar = () => {
-  setTareaSeleccionada(itemTarea);
-  console.log(itemTarea);
-  handleShowEditar();
-};
-
-
+  const openModal = () => {
+    setTareaSeleccionada(itemTarea);
+    handleShow();
+  };
+  const openModalEditar = () => {
+    setTareaSeleccionada(itemTarea);
+    handleShowEditar();
+  };
 
   return (
     <Card className="shadow w-100 my-1">
       <Card.Body>
-        <Card.Title> <b>Titulo</b>: {itemTarea.titulo}</Card.Title>
+        <Card.Title>
+          <b>Titulo</b>: {itemTarea.titulo}
+        </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
           <b>Descripcion</b>: {itemTarea.descripcion}
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
             <b>Creado</b>: {itemTarea.fecha} {itemTarea.hora}
+          </samp>
+          <br />
+          <samp className="text-muted">
+            <b>Editado</b>: {itemTarea.fechaEdicion} {itemTarea.horaEdicion}
           </samp>
         </Card.Text>
       </Card.Body>
@@ -87,7 +93,12 @@ const openModalEditar = () => {
           <Button variant="info" size="sm" className="me-2" onClick={openModal}>
             <i className="bi bi-eye"></i>
           </Button>
-          <Button variant="primary" size="sm" className="me-2" onClick={openModalEditar}> 
+          <Button
+            variant="primary"
+            size="sm"
+            className="me-2"
+            onClick={openModalEditar}
+          >
             <i className="bi bi-pencil"></i>
           </Button>
           <Button variant="danger" size="sm">
