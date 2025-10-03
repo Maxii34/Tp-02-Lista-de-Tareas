@@ -5,6 +5,7 @@ import {
   ModalTarea,
   ModalEditar,
 } from "./components/index";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
 function App() {
   //Guarda tareas en localStorage
@@ -50,28 +51,44 @@ function App() {
 
   return (
     <>
-      <Inicio
-        tareas={tareas}
-        setTareas={setTareas}
-        setTareaSeleccionada={setTareaSeleccionada}
-        handleShow={handleShow}
-        handleShowEditar={handleShowEditar}
-        eliminarTarea={eliminarTarea}
-        eliminarTodasLasTareas={eliminarTodasLasTareas}
-      />
-      <Bienvenido />
-      {/*Modales de ver y editar*/}
-      <ModalTarea
-        handleClose={handleClose}
-        show={show}
-        tareaSeleccionada={tareaSeleccionada}
-      />
-      <ModalEditar
-        handleClose={handleCloseEditar}
-        show={showEditar}
-        tareaSeleccionada={tareaSeleccionada}
-        actualizarTarea={modificarTarea}
-      />
+      <BrowserRouter>
+        <Routes>
+          {/* 👉 Cuando alguien entre a "/" lo redirige automáticamente a /bienvenido */}
+          <Route path="/" element={<Navigate to="/bienvenido" />} />
+
+          {/* Página de Bienvenida */}
+          <Route path="/bienvenido" element={<Bienvenido />} />
+
+          {/* Página principal de Inicio */}
+          <Route
+            path="/inicio"
+            element={
+              <Inicio
+                tareas={tareas}
+                setTareas={setTareas}
+                setTareaSeleccionada={setTareaSeleccionada}
+                handleShow={handleShow}
+                handleShowEditar={handleShowEditar}
+                eliminarTarea={eliminarTarea}
+                eliminarTodasLasTareas={eliminarTodasLasTareas}
+              />
+            }
+          />
+        </Routes>
+
+        {/*Modales de ver y editar*/}
+        <ModalTarea
+          handleClose={handleClose}
+          show={show}
+          tareaSeleccionada={tareaSeleccionada}
+        />
+        <ModalEditar
+          handleClose={handleCloseEditar}
+          show={showEditar}
+          tareaSeleccionada={tareaSeleccionada}
+          actualizarTarea={modificarTarea}
+        />
+      </BrowserRouter>
     </>
   );
 }
