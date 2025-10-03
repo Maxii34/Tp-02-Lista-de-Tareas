@@ -51,7 +51,7 @@ export const Bienvenido = () => {
 
           <Row className="mt-5 text-center">
             <Col>
-              <Link to="/inicio">
+              <Link to="/tareas">
                 <Button variant="primary" size="lg">
                   Empezar a Gestionar
                   <i className="bi bi-arrow-right-circle ms-2"></i>
