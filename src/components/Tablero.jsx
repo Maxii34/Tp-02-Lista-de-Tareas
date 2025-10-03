@@ -44,7 +44,7 @@ export const Tablero = ({
           <Button
             variant="danger"
             size="sm"
-            className="shadow"
+            className="shadow fst-italic fs-6"
             onClick={eliminarTodas}
           >
             <i className="bi bi-trash"></i>
@@ -72,11 +72,16 @@ export const Tablero = ({
               ))}
             </Row>
           ) : (
-            //Mensaje si no hay tareas
-            <span className="my-1 d-flex justify-content-center">
-              <i className="bi bi-arrow-down-short fs-5"></i> No hay tareas
-              pendientes <i className="bi bi-arrow-down-short fs-5"></i>
-            </span>
+            <div className="text-center my-3">
+              <p className="fs-5 d-flex justify-content-center align-items-center gap-2">
+                <i className="bi bi-inbox-fill fs-4"></i> <b>No hay tareas
+                pendientes</b> <i className="bi bi-inbox-fill fs-4"></i>
+              </p>
+              <p className="fs-6 text-muted">
+                O puedes iniciar agregando una nueva tarea
+                <i className="bi bi-plus-circle ms-1"></i>
+              </p>
+            </div>
           )}
         </Card.Body>
       </Card>
@@ -85,7 +90,7 @@ export const Tablero = ({
       <div className="texto-opaco text-center mt-1">
         <p>
           Este proyecto continúa creciendo con mejoras visuales, estructurales y
-          funcionales.
+          funcionales. 
         </p>
       </div>
     </>
