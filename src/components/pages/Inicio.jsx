@@ -7,6 +7,7 @@ export const Inicio = ({
   handleShow,
   handleShowEditar,
   eliminarTarea,
+  eliminarTodasLasTareas,
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ export const Inicio = ({
           handleShow={handleShow}
           handleShowEditar={handleShowEditar}
           eliminarTarea={eliminarTarea}
+          eliminarTodasLasTareas={eliminarTodasLasTareas}
         />
       </main>
       <Footer />

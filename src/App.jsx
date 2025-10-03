@@ -44,6 +44,9 @@ function App() {
     setTareas(tareas.filter((tarea) => tarea.id !== id));
   };
 
+  const eliminarTodasLasTareas = () => {
+    setTareas([]);
+  };
 
   return (
     <>
@@ -54,6 +57,7 @@ function App() {
         handleShow={handleShow}
         handleShowEditar={handleShowEditar}
         eliminarTarea={eliminarTarea}
+        eliminarTodasLasTareas={eliminarTodasLasTareas}
       />
       <Bienvenido />
       {/*Modales de ver y editar*/}

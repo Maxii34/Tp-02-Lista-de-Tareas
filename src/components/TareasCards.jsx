@@ -59,30 +59,28 @@ export const TareasCards = ({
     handleShowEditar();
   };
 
-const eliminar = () => {
-  Swal.fire({
-    title: "¿Estás seguro?",
-    text: "Esta acción no se puede deshacer.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#d33", 
-    cancelButtonColor: "#3085d6", 
-  }).then((result) => {
-    if (result.isConfirmed) {
-      eliminarTarea(itemTarea.id);
-      Swal.fire({
-        title: "Eliminado!",
-        text: "La tarea ha sido eliminada.",
-        icon: "success",
-        confirmButtonColor: "#28a745", 
-      });
-    }
-  });
-};
-
-
+  const eliminar = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarTarea(itemTarea.id);
+        Swal.fire({
+          title: "Eliminado!",
+          text: "La tarea ha sido eliminada.",
+          icon: "success",
+          confirmButtonColor: "#28a745",
+        });
+      }
+    });
+  };
 
   return (
     <Card className="shadow w-100 my-1">

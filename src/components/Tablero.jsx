@@ -1,5 +1,6 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
+import Swal from "sweetalert2";
 
 export const Tablero = ({
   tareas,
@@ -7,7 +8,31 @@ export const Tablero = ({
   handleShow,
   handleShowEditar,
   eliminarTarea,
+  eliminarTodasLasTareas,
 }) => {
+  const eliminarTodas = () => {
+    Swal.fire({
+      title: "¿Estás seguro de eliminar todas las tareas?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarTodasLasTareas(); // Llama a la función para eliminar todas las tareas
+        Swal.fire({
+          title: "Eliminado!",
+          text: "La tarea ha sido eliminada.",
+          icon: "success",
+          confirmButtonColor: "#28a745",
+        });
+      }
+    });
+  };
+
   return (
     <>
       <Card className="shadow tarjeta">
@@ -16,7 +41,12 @@ export const Tablero = ({
           <h3 className="mb-0">
             <i className="bi bi-card-checklist"></i> Tablero
           </h3>
-          <Button variant="danger" size="sm" className="shadow">
+          <Button
+            variant="danger"
+            size="sm"
+            className="shadow"
+            onClick={eliminarTodas}
+          >
             <i className="bi bi-trash"></i>
           </Button>
         </Card.Header>
