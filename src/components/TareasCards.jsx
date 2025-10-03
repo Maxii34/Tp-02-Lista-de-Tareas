@@ -1,11 +1,13 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
+import Swal from "sweetalert2";
 
 export const TareasCards = ({
   itemTarea,
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  eliminarTarea,
 }) => {
   const Estados = ({ estado }) => {
     switch (estado) {
@@ -57,6 +59,31 @@ export const TareasCards = ({
     handleShowEditar();
   };
 
+const eliminar = () => {
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "Esta acción no se puede deshacer.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#d33", 
+    cancelButtonColor: "#3085d6", 
+  }).then((result) => {
+    if (result.isConfirmed) {
+      eliminarTarea(itemTarea.id);
+      Swal.fire({
+        title: "Eliminado!",
+        text: "La tarea ha sido eliminada.",
+        icon: "success",
+        confirmButtonColor: "#28a745", 
+      });
+    }
+  });
+};
+
+
+
   return (
     <Card className="shadow w-100 my-1">
       <Card.Body>
@@ -101,7 +128,7 @@ export const TareasCards = ({
           >
             <i className="bi bi-pencil"></i>
           </Button>
-          <Button variant="danger" size="sm">
+          <Button variant="danger" size="sm" onClick={eliminar}>
             <i className="bi bi-trash"></i>
           </Button>
         </div>

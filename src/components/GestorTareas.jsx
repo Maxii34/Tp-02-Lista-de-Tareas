@@ -10,6 +10,7 @@ export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  eliminarTarea,
 }) => {
   const {
     register,
@@ -142,6 +143,7 @@ export const GestorTareas = ({
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
+            eliminarTarea={eliminarTarea}
           />
         </Col>
       </Row>

@@ -6,6 +6,7 @@ export const Inicio = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  eliminarTarea,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ export const Inicio = ({
           setTareaSeleccionada={setTareaSeleccionada}
           handleShow={handleShow}
           handleShowEditar={handleShowEditar}
+          eliminarTarea={eliminarTarea}
         />
       </main>
       <Footer />
