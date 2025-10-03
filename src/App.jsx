@@ -53,15 +53,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* 👉 Cuando alguien entre a "/" lo redirige automáticamente a /bienvenido */}
-          <Route path="/" element={<Navigate to="/bienvenido" />} />
+          <Route path="/" element={<Navigate to="/inicio" />} />
 
-          {/* Página de Bienvenida */}
+          <Route path="/inicio" element={<Bienvenido />} />
+
           <Route path="/bienvenido" element={<Bienvenido />} />
 
-          {/* Página principal de Inicio */}
           <Route
-            path="/inicio"
+            path="/tareas"
             element={
               <Inicio
                 tareas={tareas}
