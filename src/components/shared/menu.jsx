@@ -5,7 +5,7 @@ import { Link } from "react-router"; // corregí a react-router-dom
 
 export const Menu = () => {
   return (
-    <Navbar expand="lg" className="bg-dark px-3">
+    <Navbar expand="lg" className="css px-3">
       <Container>
         {/* Título con ícono de Bootstrap */}
         <Navbar.Brand href="/" className="text-white d-flex align-items-center">
