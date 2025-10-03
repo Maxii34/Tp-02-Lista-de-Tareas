@@ -2,7 +2,7 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export const GestorTareas = ({
   tareas,
@@ -10,6 +10,8 @@ export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  eliminarTarea,
+  eliminarTodasLasTareas,
 }) => {
   const {
     register,
@@ -142,6 +144,8 @@ export const GestorTareas = ({
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
+            eliminarTarea={eliminarTarea}
+            eliminarTodasLasTareas={eliminarTodasLasTareas}
           />
         </Col>
       </Row>
