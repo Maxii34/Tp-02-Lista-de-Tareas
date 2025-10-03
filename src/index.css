@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
-
 html,
 body {
   height: 100%;
@@ -119,7 +118,6 @@ footer {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* Botones personalizados para los estados*/
 /* Estado */
@@ -285,4 +283,21 @@ textarea.form-control,
   color: #1877f2 !important; /* Facebook Blue */
   text-shadow: 0 0 8px rgba(24, 119, 242, 0.8);
   transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.tablero-bajo {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+.tablero-bajo::-webkit-scrollbar {
+  width: 8px;
+}
+.tablero-bajo::-webkit-scrollbar-thumb {
+  background-color: #ced4da;
+  border-radius: 10px;
+}
+.tablero-bajo::-webkit-scrollbar-thumb:hover {
+  background-color: #adb5bd;
 }
