@@ -73,7 +73,9 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<Navigate to="/inicio" />} />
         </Routes>
+
 
         {/*Modales de ver y editar*/}
         <ModalTarea
