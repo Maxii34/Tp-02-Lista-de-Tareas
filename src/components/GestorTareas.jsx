@@ -10,6 +10,7 @@ export const GestorTareas = ({
   handleShowEditar,
   tareas,
   obtenerTareas,
+  setTareas
 }) => {
   const {
     register,

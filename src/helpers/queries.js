@@ -2,6 +2,7 @@ const tareasBackend = import.meta.env.VITE_API_TAREAS
 
 console.log(tareasBackend)
 
+
 //funcion para solicitar para listar tareas
 export const listarTareas = async ()=>{
     try {
@@ -51,6 +52,20 @@ export const editarTareaAPI = async (id, tareas) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(tareas),
+    })
+    console.log(respuesta)
+    return respuesta
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+//funcion para borar tareas por id
+export const borrarTareaAPI = async (id) => {
+  try {
+    const respuesta = await fetch(`${tareasBackend}/${id}`, {
+      method: "DELETE",
     })
     console.log(respuesta)
     return respuesta

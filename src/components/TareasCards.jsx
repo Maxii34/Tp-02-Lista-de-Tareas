@@ -1,14 +1,14 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Swal from "sweetalert2";
+import { borrarTareaAPI } from "../helpers/queries";
 
 export const TareasCards = ({
   itemTarea,
   handleShow,
   handleShowEditar,
-  setTareaSeleccionada
+  setTareaSeleccionada,
 }) => {
-
   const openModal = () => {
     setTareaSeleccionada(itemTarea);
     handleShow();
@@ -28,14 +28,20 @@ export const TareasCards = ({
       cancelButtonText: "Cancelar",
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        eliminarTarea(itemTarea.id);
+    }).then(async (result) => {
+      const respuesta = await borrarTareaAPI(itemTarea._id);
+      if (respuesta.status === 200) {
         Swal.fire({
           title: "Eliminado!",
           text: "La tarea ha sido eliminada.",
           icon: "success",
           confirmButtonColor: "#28a745",
+        });
+      } else {
+        Swal.fire({
+          title: "Ocurrio un error",
+          text: "La tarea no pudo ser eliminada.",
+          icon: "error",
         });
       }
     });
@@ -52,16 +58,25 @@ export const TareasCards = ({
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
-            <b>Creado</b>: {new Date(itemTarea.createdAt).toLocaleDateString('es-AR')} - {new Date(itemTarea.createdAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
+            <b>Creado</b>:{" "}
+            {new Date(itemTarea.createdAt).toLocaleDateString("es-AR")} -{" "}
+            {new Date(itemTarea.createdAt).toLocaleTimeString("es-AR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </samp>
           <br />
           <samp className="text-muted">
-            <b>Editado</b>: {new Date(itemTarea.updatedAt).toLocaleDateString('es-AR')} - {new Date(itemTarea.updatedAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
+            <b>Editado</b>:{" "}
+            {new Date(itemTarea.updatedAt).toLocaleDateString("es-AR")} -{" "}
+            {new Date(itemTarea.updatedAt).toLocaleTimeString("es-AR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </samp>
         </Card.Text>
       </Card.Body>
       <CardFooter className="d-flex justify-content-between align-items-center">
-
         <div>
           <Button variant="info" size="sm" className="me-2" onClick={openModal}>
             <i className="bi bi-eye"></i>
