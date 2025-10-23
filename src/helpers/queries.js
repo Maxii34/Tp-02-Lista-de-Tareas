@@ -24,6 +24,23 @@ export const obtenerTareasPorId = async (id)=>{
         return null
     }
 }
+//funcion para crear tarea
+export const crearTarea = async (tareas)=>{
+    try {
+        const respuesta = await fetch(tareasBackend,{
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(tareas)
+        })
+        console.log(respuesta)
+        return respuesta
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
 
 //funcion para solicitar editar
 export const editarTarea = async (id, tareaActualizada) => {

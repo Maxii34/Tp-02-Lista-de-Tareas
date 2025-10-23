@@ -52,11 +52,11 @@ export const TareasCards = ({
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
-            <b>Creado</b>: {itemTarea.fecha} {itemTarea.hora}
+            <b>Creado</b>: {new Date(itemTarea.createdAt).toLocaleDateString('es-AR')} - {new Date(itemTarea.createdAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
           </samp>
           <br />
           <samp className="text-muted">
-            <b>Editado</b>: {itemTarea.fechaEdicion} {itemTarea.horaEdicion}
+            <b>Editado</b>: {new Date(itemTarea.updatedAt).toLocaleDateString('es-AR')} - {new Date(itemTarea.updatedAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
           </samp>
         </Card.Text>
       </Card.Body>

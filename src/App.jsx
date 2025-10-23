@@ -59,6 +59,7 @@ function App() {
                 handleShowEditar={handleShowEditar}
                 setTareaSeleccionada={setTareaSeleccionada}
                 tareas={tareas}
+                obtenerTareas={obtenerTareas}
               />
             }
           />

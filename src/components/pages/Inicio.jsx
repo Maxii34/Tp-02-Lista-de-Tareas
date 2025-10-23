@@ -5,6 +5,7 @@ export const Inicio = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  obtenerTareas
 }) => {
   return (
     <>
@@ -15,6 +16,7 @@ export const Inicio = ({
           handleShow={handleShow}
           handleShowEditar={handleShowEditar}
           tareas={tareas}
+          obtenerTareas={obtenerTareas}
         />
       </main>
       <Footer />

@@ -2,13 +2,14 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { v4 as uuidv4 } from "uuid";
+import { crearTarea } from "../helpers/queries";
 
 export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
   tareas,
+  obtenerTareas
 }) => {
   const {
     register,
@@ -17,20 +18,24 @@ export const GestorTareas = ({
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data.titulo.trim() && data.descripcion.trim()) {
-      const nuevaTarea = {
-        id: uuidv4(),
-        ...data,
-        fecha: new Date().toLocaleDateString(),
-        hora: new Date().toLocaleTimeString(),
-      };
-      setTareas([...tareas, nuevaTarea]);
-      Swal.fire({
-        title: `¡Creaste una tarea!`,
-        text: "Has creado una tarea con éxito.",
-        icon: "success",
-      });
+      const respuesta = await crearTarea(data);
+      if (respuesta.status === 201) {
+        Swal.fire({
+          title: `¡Creaste una tarea!`,
+          text: `Has creado una tarea ${data.titulo} exitosamente.`,
+          icon: "success",
+        });
+        reset();
+        obtenerTareas();
+      } else {
+        Swal.fire({
+          title: "Error al crear la tarea",
+          text: "Titulo o descripción no válidos.",
+          icon: "error",
+        });
+      }
     } else {
       Swal.fire({
         title: "Error al crear la tarea",
@@ -38,8 +43,8 @@ export const GestorTareas = ({
         icon: "error",
       });
     }
-    reset();
   };
+
 
   return (
     <section>
