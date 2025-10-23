@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { editarTarea } from "../helpers/queries";
+import { editarTareaAPI } from "../helpers/queries";
 import Swal from "sweetalert2";
 
 export const ModalEditar = ({
@@ -33,19 +33,14 @@ export const ModalEditar = ({
       return;
     }
 
-    const fechaActualizacion = new Date().toLocaleDateString();
-    const horaActualizacion = new Date().toLocaleTimeString();
-
     const tareaActualizada = {
-      titulo: titulo,
-      descripcion: descripcion,
-      fechaEdicion: fechaActualizacion,
-      horaEdicion: horaActualizacion,
+      titulo: titulo.trim(),
+      descripcion: descripcion.trim(),
     };
 
     // Llamar a la API para actualizar
-    const respuesta = await editarTarea(
-      tareaSeleccionada._id, // MongoDB usa _id
+    const respuesta = await editarTareaAPI(
+      tareaSeleccionada._id,
       tareaActualizada
     );
 

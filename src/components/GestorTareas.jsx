@@ -2,14 +2,14 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { crearTarea } from "../helpers/queries";
+import { crearTarea, editarTareaAPI } from "../helpers/queries";
 
 export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
   tareas,
-  obtenerTareas
+  obtenerTareas,
 }) => {
   const {
     register,
@@ -19,6 +19,7 @@ export const GestorTareas = ({
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     if (data.titulo.trim() && data.descripcion.trim()) {
       const respuesta = await crearTarea(data);
       if (respuesta.status === 201) {
@@ -37,14 +38,23 @@ export const GestorTareas = ({
         });
       }
     } else {
-      Swal.fire({
-        title: "Error al crear la tarea",
-        text: "Titulo o descripción no válidos.",
-        icon: "error",
-      });
+      // Aki se agrega el editar
+      const respuestaEditar = await editarTareaAPI(id, data);
+      if (respuestaEditar.status === 200) {
+        Swal.fire({
+          title: `¡Tarea modifica!`,
+          text: `La tarea ${data.titulo} fue modificada exitosamente.`,
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error al crear la tarea",
+          text: "Titulo o descripción no válidos.",
+          icon: "error",
+        });
+      }
     }
   };
-
 
   return (
     <section>

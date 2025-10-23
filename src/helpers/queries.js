@@ -43,14 +43,14 @@ export const crearTarea = async (tareas)=>{
 }
 
 //funcion para solicitar editar
-export const editarTarea = async (id, tareaActualizada) => {
+export const editarTareaAPI = async (id, tareas) => {
   try {
     const respuesta = await fetch(`${tareasBackend}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tareaActualizada),
+      body: JSON.stringify(tareas),
     })
     console.log(respuesta)
     return respuesta
