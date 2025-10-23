@@ -6,11 +6,14 @@ import {
   ModalEditar,
 } from "./components/index";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { listarTareas } from "./helpers/queries";
+
 
 function App() {  
 
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
+  //Estados y funciones para el modal de ver
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,17 +22,24 @@ function App() {
   const handleCloseEditar = () => setShowEditar(false);
   const handleShowEditar = () => setShowEditar(true);
 
-  const modificarTarea = (tareaEditada) => {
-    setTareas(
-      tareas.map((tarea) => {
-        if (tarea.id === tareaEditada.id) {
-          return tareaEditada;
-        }
-        return tarea;
-      })
-    );
-    setTareaSeleccionada(null);
+  const [tareas, setTareas] = useState([]);
+
+  useEffect(() => {
+    obtenerTareas();
+  }, []);
+
+  const obtenerTareas = async () => {
+    //Solicitar los datos al backend con la funcion de queries
+    const respuesta = await listarTareas();
+    //Verificar que los datos llegen correctamente
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      //Cargar las tareas en el estado
+      setTareas(datos);
+    }
   };
+
+
 
   return (
     <>
@@ -47,6 +57,8 @@ function App() {
               <Inicio
                 handleShow={handleShow}
                 handleShowEditar={handleShowEditar}
+                setTareaSeleccionada={setTareaSeleccionada}
+                tareas={tareas}
               />
             }
           />
@@ -64,7 +76,7 @@ function App() {
           handleClose={handleCloseEditar}
           show={showEditar}
           tareaSeleccionada={tareaSeleccionada}
-          actualizarTarea={modificarTarea}
+          obtenerTareas={obtenerTareas}
         />
       </BrowserRouter>
     </>

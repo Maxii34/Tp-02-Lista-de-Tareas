@@ -5,13 +5,10 @@ import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 
 export const GestorTareas = ({
-  tareas,
-  setTareas,
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
-  eliminarTarea,
-  eliminarTodasLasTareas,
+  tareas,
 }) => {
   const {
     register,
@@ -140,12 +137,10 @@ export const GestorTareas = ({
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
           <Tablero
-            tareas={tareas}
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
-            eliminarTarea={eliminarTarea}
-            eliminarTodasLasTareas={eliminarTodasLasTareas}
+            tareas={tareas}
           />
         </Col>
       </Row>

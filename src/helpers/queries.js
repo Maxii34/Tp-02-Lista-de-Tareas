@@ -1,0 +1,44 @@
+const tareasBackend = import.meta.env.VITE_API_TAREAS
+
+console.log(tareasBackend)
+
+//funcion para solicitar para listar tareas
+export const listarTareas = async ()=>{
+    try {
+        const respuesta = await fetch(tareasBackend)
+        console.log(respuesta)
+        return respuesta
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
+//funcion para solicitar obtener tarea por id, pero no se usa en el proyecto (Eliminar depues...)
+export const obtenerTareasPorId = async (id)=>{
+    try {
+        const respuesta = await fetch(`${tareasBackend}/${id}`)
+        console.log(respuesta)
+        return respuesta
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
+
+//funcion para solicitar editar
+export const editarTarea = async (id, tareaActualizada) => {
+  try {
+    const respuesta = await fetch(`${tareasBackend}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tareaActualizada),
+    })
+    console.log(respuesta)
+    return respuesta
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}

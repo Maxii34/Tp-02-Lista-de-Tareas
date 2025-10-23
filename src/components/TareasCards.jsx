@@ -4,10 +4,9 @@ import Swal from "sweetalert2";
 
 export const TareasCards = ({
   itemTarea,
-  setTareaSeleccionada,
   handleShow,
   handleShowEditar,
-  eliminarTarea,
+  setTareaSeleccionada
 }) => {
 
   const openModal = () => {

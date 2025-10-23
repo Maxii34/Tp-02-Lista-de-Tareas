@@ -1,26 +1,10 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
-import { listarTareas } from "../herpers/queries";
 
-export const Tablero = ({ handleShow, handleShowEditar }) => {
-  const [tareas, setTareas] = useState([]);
 
-  useEffect(() => {
-    obtenerTareas();
-  }, []);
+export const Tablero = ({ handleShow, handleShowEditar, setTareaSeleccionada, tareas }) => {
 
-  const obtenerTareas = async () => {
-    //Solicitar los datos al backend con la funcion de queries
-    const respuesta = await listarTareas();
-    //Verificar que los datos llegen correctamente
-    if (respuesta.status === 200) {
-      const datos = await respuesta.json();
-      //Cargar las tareas en el estado
-      setTareas(datos);
-    }
-  };
 
   const eliminarTodas = () => {
     Swal.fire({
@@ -77,6 +61,7 @@ export const Tablero = ({ handleShow, handleShowEditar }) => {
                     itemTarea={itemTarea}
                     handleShow={handleShow}
                     handleShowEditar={handleShowEditar}
+                    setTareaSeleccionada={setTareaSeleccionada}
                   />
                 </Col>
               ))}
