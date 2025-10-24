@@ -1,10 +1,12 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
 import Swal from "sweetalert2";
+import { useProps } from "./context/PropsContext";
 
 
-export const Tablero = ({ handleShow, handleShowEditar, setTareaSeleccionada, tareas }) => {
+export const Tablero = ({ handleShow, handleShowEditar, setTareaSeleccionada }) => {
 
+  const { tareas } = useProps();
 
   const eliminarTodas = () => {
     Swal.fire({

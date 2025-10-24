@@ -2,15 +2,14 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { crearTarea, editarTareaAPI } from "../helpers/queries";
+import { crearTarea } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
+
 
 export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
-  tareas,
-  obtenerTareas,
-  setTareas
 }) => {
   const {
     register,
@@ -19,41 +18,34 @@ export const GestorTareas = ({
     formState: { errors },
   } = useForm();
 
+  const { obtenerTareas } = useProps();
+
   const onSubmit = async (data) => {
-    console.log(data);
-    if (data.titulo.trim() && data.descripcion.trim()) {
-      const respuesta = await crearTarea(data);
-      if (respuesta.status === 201) {
-        Swal.fire({
-          title: `¡Creaste una tarea!`,
-          text: `Has creado una tarea ${data.titulo} exitosamente.`,
-          icon: "success",
-        });
-        reset();
-        obtenerTareas();
-      } else {
-        Swal.fire({
-          title: "Error al crear la tarea",
-          text: "Titulo o descripción no válidos.",
-          icon: "error",
-        });
-      }
+    //Validacion
+    if (!data.titulo.trim() || !data.descripcion.trim()) {
+      Swal.fire({
+      title: "Campos incompletos",
+      text: "Titulo y descripción son requeridos.",
+      icon: "error",
+    });
+    return
+    } 
+    //Crear tarea
+    const respuesta = await crearTarea(data);
+    if (respuesta.status === 201) {
+      Swal.fire({
+        title: `¡Creaste una tarea!`,
+        text: `Has creado una tarea ${data.titulo} exitosamente.`,
+        icon: "success",
+      });
+      obtenerTareas();
+      reset();
     } else {
-      // Aki se agrega el editar
-      const respuestaEditar = await editarTareaAPI(id, data);
-      if (respuestaEditar.status === 200) {
-        Swal.fire({
-          title: `¡Tarea modifica!`,
-          text: `La tarea ${data.titulo} fue modificada exitosamente.`,
-          icon: "success",
-        });
-      } else {
-        Swal.fire({
-          title: "Error al crear la tarea",
-          text: "Titulo o descripción no válidos.",
-          icon: "error",
-        });
-      }
+      Swal.fire({
+        title: "Error al crear la tarea",
+        text: "Titulo o descripción no válidos.",
+        icon: "error",
+      });
     }
   };
 
@@ -156,7 +148,6 @@ export const GestorTareas = ({
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
-            tareas={tareas}
           />
         </Col>
       </Row>

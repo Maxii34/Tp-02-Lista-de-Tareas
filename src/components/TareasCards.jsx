@@ -2,6 +2,8 @@ import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Swal from "sweetalert2";
 import { borrarTareaAPI } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
+
 
 export const TareasCards = ({
   itemTarea,
@@ -9,6 +11,9 @@ export const TareasCards = ({
   handleShowEditar,
   setTareaSeleccionada,
 }) => {
+  //inicia la logica
+  const { obtenerTareas } = useProps();
+
   const openModal = () => {
     setTareaSeleccionada(itemTarea);
     handleShow();
@@ -37,6 +42,7 @@ export const TareasCards = ({
           icon: "success",
           confirmButtonColor: "#28a745",
         });
+        obtenerTareas();
       } else {
         Swal.fire({
           title: "Ocurrio un error",

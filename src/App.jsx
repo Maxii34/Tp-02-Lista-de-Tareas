@@ -38,9 +38,6 @@ function App() {
                   handleShow={handleShow}
                   handleShowEditar={handleShowEditar}
                   setTareaSeleccionada={setTareaSeleccionada}
-                  tareas={tareas}
-                  setTareas={setTareas}
-                  obtenerTareas={obtenerTareas}
                 />
               }
             />
@@ -57,7 +54,6 @@ function App() {
             handleClose={handleCloseEditar}
             show={showEditar}
             tareaSeleccionada={tareaSeleccionada}
-            obtenerTareas={obtenerTareas}
           />
         </BrowserRouter>
       </PropsProvider>

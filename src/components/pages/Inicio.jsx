@@ -18,9 +18,6 @@ export const Inicio = ({
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
-            tareas={tareas}
-            setTareas={setTareas}
-            obtenerTareas={obtenerTareas}
           />
         </main>
       </PropsProvider>

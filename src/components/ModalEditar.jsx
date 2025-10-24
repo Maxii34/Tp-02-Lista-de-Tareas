@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { editarTareaAPI } from "../helpers/queries";
 import Swal from "sweetalert2";
+import { editarTareaAPI } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
+
 
 export const ModalEditar = ({
   show,
   handleClose,
   tareaSeleccionada,
-  obtenerTareas, // Nueva prop para refrescar la lista
 }) => {
+  //Inicia la logica
+  const { obtenerTareas } = useProps();
+
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
