@@ -9,20 +9,20 @@ export const Bienvenido = () => {
       <main className="mt-5 mb-5">
         <Container>
           <Row className="justify-content-center text-center">
-            <Col md={8}>
+            <Col md={8} >
               <h1 className="display-4 fw-bold">
                 Bienvenido a tu Gestor de Tareas
               </h1>
               <p className="lead mt-3">
                 Una solución simple y poderosa para <b className="fw-bold">organizar tu día a día</b>.
-                Captura ideas, establece prioridades y no vuelvas a olvidar una
-                tarea importante.
+                Captura ideas, establece prioridades, para no vuelver a olvidar las
+                tareas mas importante.
               </p>
             </Col>
           </Row>
 
-          <Row className="mt-5 text-center">
-            <Col md={4}>
+          <Row className="mt-3 text-center">
+            <Col md={4} >
               <i className="bi bi-card-checklist fs-1 text-primary"></i>
               <h3 className="mt-3">Organiza</h3>
               <p>

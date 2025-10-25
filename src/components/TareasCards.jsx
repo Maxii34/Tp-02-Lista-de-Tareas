@@ -55,7 +55,7 @@ export const TareasCards = ({
   };
 
   return (
-    <Card className="shadow w-100 my-1">
+    <Card className="shadow w-100  tareasCard">
       <Card.Body>
         <Card.Title>
           <b>Titulo</b>: {itemTarea.titulo}
