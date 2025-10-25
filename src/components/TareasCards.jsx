@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { borrarTareaAPI } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
 
-
 export const TareasCards = ({
   itemTarea,
   handleShow,
@@ -34,21 +33,23 @@ export const TareasCards = ({
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
     }).then(async (result) => {
-      const respuesta = await borrarTareaAPI(itemTarea._id);
-      if (respuesta.status === 200) {
-        Swal.fire({
-          title: "Eliminado!",
-          text: "La tarea ha sido eliminada.",
-          icon: "success",
-          confirmButtonColor: "#28a745",
-        });
-        obtenerTareas();
-      } else {
-        Swal.fire({
-          title: "Ocurrio un error",
-          text: "La tarea no pudo ser eliminada.",
-          icon: "error",
-        });
+      if (result.isConfirmed) {
+        const respuesta = await borrarTareaAPI(itemTarea._id);
+        if (respuesta.status === 200) {
+          await obtenerTareas();
+          Swal.fire({
+            title: "Eliminado!",
+            text: "La tarea ha sido eliminada.",
+            icon: "success",
+            confirmButtonColor: "#28a745",
+          });
+        } else {
+          Swal.fire({
+            title: "Ocurrio un error",
+            text: "La tarea no pudo ser eliminada.",
+            icon: "error",
+          });
+        }
       }
     });
   };
