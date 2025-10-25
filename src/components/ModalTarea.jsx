@@ -8,15 +8,9 @@ export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Titulo: {tareaSeleccionada.titulo || ""}</Modal.Title>
-        </Modal.Header>
         <Modal.Body>
-          Descripcion: {tareaSeleccionada.descripcion || ""} <br />
-          <samp className="text-muted">
-            <b>Creado</b>: {tareaSeleccionada.fecha}
-            {tareaSeleccionada.hora}
-          </samp>
+          <Modal.Title className="py-2">Titulo: {tareaSeleccionada.titulo || ""}</Modal.Title>
+          <b className="py-2">Descripcion:</b> <br /> {tareaSeleccionada.descripcion || ""} <br />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleClose}>

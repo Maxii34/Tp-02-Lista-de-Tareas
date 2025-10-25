@@ -1,54 +1,17 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Swal from "sweetalert2";
+import { borrarTareaAPI } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
 
 export const TareasCards = ({
   itemTarea,
-  setTareaSeleccionada,
   handleShow,
   handleShowEditar,
-  eliminarTarea,
+  setTareaSeleccionada,
 }) => {
-  const Estados = ({ estado }) => {
-    switch (estado) {
-      case "Creada":
-        return (
-          <Badge bg="secondary" className="shadow">
-            Pendiente
-          </Badge>
-        );
-      case "Pendiente":
-        return (
-          <Badge bg="warning" className="shadow">
-            En curso
-          </Badge>
-        );
-      case "En proceso":
-        return (
-          <Badge bg="success" className="shadow">
-            Completada
-          </Badge>
-        );
-      case "En revisión":
-        return (
-          <Badge bg="danger" className="shadow">
-            Eliminada
-          </Badge>
-        );
-      case "Terminada":
-        return (
-          <Badge bg="info" className="shadow">
-            Finalizada
-          </Badge>
-        );
-      default:
-        return (
-          <Badge bg="secondary" className="shadow">
-            Pendiente
-          </Badge>
-        );
-    }
-  };
+  //inicia la logica
+  const { obtenerTareas } = useProps();
 
   const openModal = () => {
     setTareaSeleccionada(itemTarea);
@@ -69,21 +32,30 @@ export const TareasCards = ({
       cancelButtonText: "Cancelar",
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        eliminarTarea(itemTarea.id);
-        Swal.fire({
-          title: "Eliminado!",
-          text: "La tarea ha sido eliminada.",
-          icon: "success",
-          confirmButtonColor: "#28a745",
-        });
+        const respuesta = await borrarTareaAPI(itemTarea._id);
+        if (respuesta.status === 200) {
+          await obtenerTareas();
+          Swal.fire({
+            title: "Eliminado!",
+            text: "La tarea ha sido eliminada.",
+            icon: "success",
+            confirmButtonColor: "#28a745",
+          });
+        } else {
+          Swal.fire({
+            title: "Ocurrio un error",
+            text: "La tarea no pudo ser eliminada.",
+            icon: "error",
+          });
+        }
       }
     });
   };
 
   return (
-    <Card className="shadow w-100 my-1">
+    <Card className="shadow w-100  tareasCard">
       <Card.Body>
         <Card.Title>
           <b>Titulo</b>: {itemTarea.titulo}
@@ -93,28 +65,26 @@ export const TareasCards = ({
         </Card.Subtitle>
         <Card.Text>
           <samp className="text-muted">
-            <b>Creado</b>: {itemTarea.fecha} {itemTarea.hora}
+            <b>Creado</b>:{" "}
+            {new Date(itemTarea.createdAt).toLocaleDateString("es-AR")} -{" "}
+            {new Date(itemTarea.createdAt).toLocaleTimeString("es-AR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </samp>
           <br />
           <samp className="text-muted">
-            <b>Editado</b>: {itemTarea.fechaEdicion} {itemTarea.horaEdicion}
+            <b>Editado</b>:{" "}
+            {new Date(itemTarea.updatedAt).toLocaleDateString("es-AR")} -{" "}
+            {new Date(itemTarea.updatedAt).toLocaleTimeString("es-AR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </samp>
         </Card.Text>
       </Card.Body>
       <CardFooter className="d-flex justify-content-between align-items-center">
-        <Badge bg="secondary" className="shadow">
-          Pendiente
-        </Badge>
-
         <div>
-          <Button
-            variant="success"
-            size="sm"
-            className="me-2"
-            onClick={Estados}
-          >
-            <i className="bi bi-check-circle"></i>
-          </Button>
           <Button variant="info" size="sm" className="me-2" onClick={openModal}>
             <i className="bi bi-eye"></i>
           </Button>

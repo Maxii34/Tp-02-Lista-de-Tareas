@@ -210,16 +210,24 @@ footer {
 }
 
 .tareasCard {
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  background: #ffffff; /* blanco suave */
+  border: 2px solid rgba(80, 116, 233, 0.07); /* borde más suave */
+  border-radius: 10px;
   overflow: hidden;
   height: 100%;
   user-select: none;
-  transition: box-shadow 0.5s ease-in-out;
+  transition: all 0.25s ease; 
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.09); 
 }
+
+/* Hover */
 .tareasCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px); 
+  background: #b7cbeb10; 
+  border-color: rgba(143, 178, 209, 0.979); 
+  box-shadow: 0px 10px 22px rgba(5, 40, 71, 0.30); 
 }
+
 
 /* Estados de las tareas */
 .tareasCard.itemEstado-creado {
@@ -301,3 +309,4 @@ textarea.form-control,
 .tablero-bajo::-webkit-scrollbar-thumb:hover {
   background-color: #adb5bd;
 }
+

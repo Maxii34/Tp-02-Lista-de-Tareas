@@ -76,7 +76,7 @@ export const Footer = () => {
 
         <Row className="mt-3">
           <Col className="text-center border-1 border-top">
-            <p>
+            <p className="py-1">
               &copy; 2025 Gestor de Tareas - Todos los derechos
               reservados
             </p>
