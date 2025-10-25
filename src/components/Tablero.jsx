@@ -1,15 +1,13 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { TareasCards } from "./TareasCards";
 import Swal from "sweetalert2";
+import { useProps } from "./context/PropsContext";
 
-export const Tablero = ({
-  tareas,
-  setTareaSeleccionada,
-  handleShow,
-  handleShowEditar,
-  eliminarTarea,
-  eliminarTodasLasTareas,
-}) => {
+
+export const Tablero = ({ handleShow, handleShowEditar, setTareaSeleccionada }) => {
+
+  const { tareas } = useProps();
+
   const eliminarTodas = () => {
     Swal.fire({
       title: "¿Estás seguro de eliminar todas las tareas?",
@@ -59,14 +57,13 @@ export const Tablero = ({
         <Card.Body className="tablero-bajo">
           {tareas.length > 0 ? (
             <Row>
-              {tareas.map((itemTarea, index) => (
-                <Col xs={12} md={6} lg={6} key={index}>
+              {tareas.map((itemTarea) => (
+                <Col xs={12} md={6} lg={6} key={itemTarea._id}>
                   <TareasCards
                     itemTarea={itemTarea}
-                    setTareaSeleccionada={setTareaSeleccionada}
                     handleShow={handleShow}
                     handleShowEditar={handleShowEditar}
-                    eliminarTarea={eliminarTarea}
+                    setTareaSeleccionada={setTareaSeleccionada}
                   />
                 </Col>
               ))}
@@ -74,8 +71,9 @@ export const Tablero = ({
           ) : (
             <div className="text-center my-3">
               <p className="fs-5 d-flex justify-content-center align-items-center gap-2">
-                <i className="bi bi-inbox-fill fs-4"></i> <b>No hay tareas
-                pendientes</b> <i className="bi bi-inbox-fill fs-4"></i>
+                <i className="bi bi-inbox-fill fs-4"></i>{" "}
+                <b>No hay tareas pendientes</b>{" "}
+                <i className="bi bi-inbox-fill fs-4"></i>
               </p>
               <p className="fs-6 text-muted">
                 O puedes iniciar agregando una nueva tarea
@@ -90,7 +88,7 @@ export const Tablero = ({
       <div className="texto-opaco text-center mt-1">
         <p>
           Este proyecto continúa creciendo con mejoras visuales, estructurales y
-          funcionales. 
+          funcionales.
         </p>
       </div>
     </>

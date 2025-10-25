@@ -2,18 +2,22 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
+import { editarTareaAPI } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
+
 
 export const ModalEditar = ({
   show,
   handleClose,
   tareaSeleccionada,
-  actualizarTarea,
 }) => {
-  //Estados locales para manejar la edición
+  //Inicia la logica
+  const { obtenerTareas } = useProps();
+
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
-  //useEffect para cargar los datos de la tarea seleccionada al abrir el modal
+  // useEffect para cargar los datos de la tarea seleccionada al abrir el modal
   useEffect(() => {
     if (tareaSeleccionada) {
       setTitulo(tareaSeleccionada.titulo);
@@ -21,21 +25,46 @@ export const ModalEditar = ({
     }
   }, [tareaSeleccionada]);
 
-  const guardarTareaEditada = () => {
-    const fechaActualizacion = new Date().toLocaleDateString();
-    const horaActualizacion = new Date().toLocaleTimeString();
+  const guardarTareaEditada = async () => {
+    // Validación simple
+    if (!titulo.trim() || !descripcion.trim()) {
+      Swal.fire({
+        title: "Campos vacíos",
+        text: "Por favor completa todos los campos",
+        icon: "warning",
+        confirmButtonColor: "#f39c12",
+      });
+      return;
+    }
 
     const tareaActualizada = {
-      id: tareaSeleccionada.id,
-      titulo: titulo,
-      descripcion: descripcion,
-      fecha: tareaSeleccionada.fecha,
-      hora: tareaSeleccionada.hora,
-      fechaEdicion: fechaActualizacion,
-      horaEdicion: horaActualizacion,
+      titulo: titulo.trim(),
+      descripcion: descripcion.trim(),
     };
-    actualizarTarea(tareaActualizada);
-    handleClose();
+
+    // Llamar a la API para actualizar
+    const respuesta = await editarTareaAPI(
+      tareaSeleccionada._id,
+      tareaActualizada
+    );
+
+    if (respuesta?.status === 200) {
+      Swal.fire({
+        title: "¡Éxito!",
+        text: "Tarea actualizada correctamente",
+        icon: "success",
+        confirmButtonColor: "#28a745",
+      });
+      obtenerTareas(); // Refrescar la lista de tareas
+      handleClose(); // Cerrar el modal
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "No se pudo actualizar la tarea",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
+    }
   };
 
   return (
@@ -54,6 +83,7 @@ export const ModalEditar = ({
         <label>Descripción:</label>
         <textarea
           className="form-control"
+          rows="4"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
         />
@@ -63,7 +93,7 @@ export const ModalEditar = ({
           Cancelar
         </Button>
         <Button variant="success" onClick={guardarTareaEditada}>
-          Guardar
+          Guardar cambios
         </Button>
       </Modal.Footer>
     </Modal>

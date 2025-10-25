@@ -2,16 +2,14 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { v4 as uuidv4 } from "uuid";
+import { crearTarea } from "../helpers/queries";
+import { useProps } from "./context/PropsContext";
+
 
 export const GestorTareas = ({
-  tareas,
-  setTareas,
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
-  eliminarTarea,
-  eliminarTodasLasTareas,
 }) => {
   const {
     register,
@@ -20,20 +18,28 @@ export const GestorTareas = ({
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    if (data.titulo.trim() && data.descripcion.trim()) {
-      const nuevaTarea = {
-        id: uuidv4(),
-        ...data,
-        fecha: new Date().toLocaleDateString(),
-        hora: new Date().toLocaleTimeString(),
-      };
-      setTareas([...tareas, nuevaTarea]);
+  const { obtenerTareas } = useProps();
+
+  const onSubmit = async (data) => {
+    //Validacion
+    if (!data.titulo.trim() || !data.descripcion.trim()) {
+      Swal.fire({
+      title: "Campos incompletos",
+      text: "Titulo y descripción son requeridos.",
+      icon: "error",
+    });
+    return
+    } 
+    //Crear tarea
+    const respuesta = await crearTarea(data);
+    if (respuesta.status === 201) {
       Swal.fire({
         title: `¡Creaste una tarea!`,
-        text: "Has creado una tarea con éxito.",
+        text: `Has creado una tarea ${data.titulo} exitosamente.`,
         icon: "success",
       });
+      obtenerTareas();
+      reset();
     } else {
       Swal.fire({
         title: "Error al crear la tarea",
@@ -41,7 +47,6 @@ export const GestorTareas = ({
         icon: "error",
       });
     }
-    reset();
   };
 
   return (
@@ -140,12 +145,9 @@ export const GestorTareas = ({
         {/* Columna derecha */}
         <Col xs={12} md={8} lg={8} className="my-2">
           <Tablero
-            tareas={tareas}
             setTareaSeleccionada={setTareaSeleccionada}
             handleShow={handleShow}
             handleShowEditar={handleShowEditar}
-            eliminarTarea={eliminarTarea}
-            eliminarTodasLasTareas={eliminarTodasLasTareas}
           />
         </Col>
       </Row>
