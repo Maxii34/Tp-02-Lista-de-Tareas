@@ -4,6 +4,7 @@ import {
   Bienvenido,
   ModalTarea,
   ModalEditar,
+  ModalLogin,
 } from "./components/index";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { PropsProvider } from "./components/context/PropsContext";
@@ -55,6 +56,7 @@ function App() {
             show={showEditar}
             tareaSeleccionada={tareaSeleccionada}
           />
+          <ModalLogin/>
         </BrowserRouter>
       </PropsProvider>
     </>

@@ -31,6 +31,11 @@ export const PropsProvider = ({ children }) => {
     }
   };
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <propsContext.Provider
       value={{
@@ -38,6 +43,9 @@ export const PropsProvider = ({ children }) => {
         tareas,
         setTareas,
         obtenerTareas,
+        show,
+        handleClose,
+        handleShow,
       }}
     >
       {children}
