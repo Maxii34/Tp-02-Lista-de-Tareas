@@ -1,7 +1,6 @@
 const tareasBackend = import.meta.env.VITE_API_TAREAS
 const userBackend = import.meta.env.VITE_API_USER
 
-console.log(tareasBackend)
 
 //funcion para solicitar para listar tareas
 export const listarTareas = async ()=>{
