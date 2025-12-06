@@ -4,11 +4,14 @@ import Navbar from "react-bootstrap/Navbar";
 import { useProps } from "../context/PropsContext";
 
 export const Menu = () => {
-  const { handleShow } = useProps();
-
+  const { handleShow, handleShowRegister } = useProps();
   const abrirModal = (e) => {
     e.preventDefault();
     handleShow();
+  };
+  const Register = (e) => {
+    e.preventDefault();
+    handleShowRegister();
   };
 
   return (
@@ -39,7 +42,10 @@ export const Menu = () => {
             >
               <i className="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
             </Nav.Link>
-            <Nav.Link className="text-white fs-6 mx-1 text-decoration-none">
+            <Nav.Link
+              onClick={Register}
+              className="text-white fs-6 mx-1 text-decoration-none"
+            >
               <i className="bi bi-door-closed me-1"></i> Registrarse
             </Nav.Link>
           </Nav>

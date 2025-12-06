@@ -1,20 +1,22 @@
 import { Button, Modal, Form } from "react-bootstrap";
 import { useProps } from "../context/PropsContext";
-import { useState } from "react";
+import { Link } from "react-router";
 
 export const ModalLogin = () => {
-  const { show, handleClose } = useProps();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { show, handleClose, handleShowRegister } = useProps();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClose();
   };
+  const abrirRegistro = (e) => {
+    e.preventDefault();
+    handleClose();
+    handleShowRegister();
+  };
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         <div>
           <div className="d-flex flex-column align-items-center justify-content-center mb-4">
@@ -43,9 +45,9 @@ export const ModalLogin = () => {
           <div className="d-flex flex-column align-items-center text-center mt-3">
             <span className="mb-2">
               ¿Aún no estás registrado?{" "}
-              <a href="#" className="text-decoration-none">
+              <Link onClick={abrirRegistro} className="text-decoration-none">
                 Regístrate aquí
-              </a>
+              </Link>
             </span>
             <a href="#" className="text-muted text-decoration-none">
               ¿Olvidaste tu contraseña?
@@ -53,8 +55,8 @@ export const ModalLogin = () => {
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+      <Modal.Footer className="p-0 d-flex justify-content-center align-content-center">
+        <Button variant="secondary" onClick={handleClose} className=" shadow-lg">
           Cerrar
         </Button>
       </Modal.Footer>
