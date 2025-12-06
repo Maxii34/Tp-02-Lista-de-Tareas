@@ -2,6 +2,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useProps } from "../context/PropsContext";
+import { Link } from "react-router";
+
 
 export const Menu = () => {
   const { handleShow, handleShowRegister } = useProps();
@@ -23,19 +25,19 @@ export const Menu = () => {
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-light" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto d-flex gap-2">
-            <Nav.Link
+          <Nav className="ms-auto d-flex justify-content-center align-items-center g-2">
+            <Link
               to="/inicio"
               className="text-white fs-6 mx-1 text-decoration-none"
             >
               <i className="bi bi-house-door me-1"></i> Bienvenido
-            </Nav.Link>
-            <Nav.Link
+            </Link>
+            <Link
               to="/tareas"
               className="text-white fs-6 mx-1 text-decoration-none"
             >
               <i className="bi bi-card-checklist me-1"></i> Tareas
-            </Nav.Link>
+            </Link>
             <Nav.Link
               onClick={abrirModal}
               className="text-white fs-6 mx-1 text-decoration-none"
@@ -46,8 +48,13 @@ export const Menu = () => {
               onClick={Register}
               className="text-white fs-6 mx-1 text-decoration-none"
             >
-              <i className="bi bi-door-closed me-1"></i> Registrarse
+              <i className="bi bi-person-add me-1"></i> Registrarse
             </Nav.Link>
+            <Link
+              className="text-white fs-6 mx-1 text-decoration-none"
+            >
+              <i className="bi bi-door-closed me-1"></i> Cerrar Sesión
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

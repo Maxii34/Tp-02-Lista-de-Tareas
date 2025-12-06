@@ -1,5 +1,5 @@
-const tareasBackend = import.meta.env.VITE_API_TAREAS
-const userBackend = import.meta.env.VITE_API_USER
+const tareasBackend = import.meta.env.VITE_API_TAREAS_DEV
+const userBackend = import.meta.env.VITE_API_USER_DEV
 
 
 //funcion para solicitar para listar tareas

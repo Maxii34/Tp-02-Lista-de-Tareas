@@ -14,12 +14,10 @@ export const ModalLogin = ({ setUserLogged }) => {
     formState: { errors },
   } = useForm();
 
-  const cerrarModal = (e) => {
-    e.preventDefault();
+  const cerrarModal = () => {
     handleClose();
   };
-  const abrirRegistro = (e) => {
-    e.preventDefault();
+  const abrirRegistro = () => {
     handleClose();
     handleShowRegister();
   };
