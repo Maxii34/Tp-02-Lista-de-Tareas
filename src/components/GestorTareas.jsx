@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { crearTarea } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
 
-
 export const GestorTareas = ({
   setTareaSeleccionada,
   handleShow,
@@ -21,29 +20,38 @@ export const GestorTareas = ({
   const { obtenerTareas } = useProps();
 
   const onSubmit = async (data) => {
-    //Validacion
+    // Validación
     if (!data.titulo.trim() || !data.descripcion.trim()) {
       Swal.fire({
-      title: "Campos incompletos",
-      text: "Titulo y descripción son requeridos.",
-      icon: "error",
-    });
-    return
-    } 
-    //Crear tarea
-    const respuesta = await crearTarea(data);
+        title: "Campos incompletos",
+        text: "Titulo y descripción son requeridos.",
+        icon: "error",
+      });
+      return;
+    }
+
+    const tareaCompleta = {
+      titulo: data.titulo,
+      descripcion: data.descripcion,
+      estado: "Pendiente", 
+    };
+
+    const respuesta = await crearTarea(tareaCompleta);
+
     if (respuesta.status === 201) {
       Swal.fire({
         title: `¡Creaste una tarea!`,
-        text: `Has creado una tarea ${data.titulo} exitosamente.`,
+        text: `Has creado la tarea "${data.titulo}" exitosamente.`,
         icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
       });
       obtenerTareas();
       reset();
     } else {
       Swal.fire({
         title: "Error al crear la tarea",
-        text: "Titulo o descripción no válidos.",
+        text:  "Por favor verifica los datos.",
         icon: "error",
       });
     }

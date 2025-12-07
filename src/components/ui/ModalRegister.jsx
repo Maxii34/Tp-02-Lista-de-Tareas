@@ -1,23 +1,74 @@
 import { Button, Modal, Form } from "react-bootstrap";
 import { useProps } from "../context/PropsContext";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { registerUserAPI } from "../../helpers/queries";
+import Swal from "sweetalert2";
+
 
 export const ModalRegister = () => {
   const { showRegister, handleCloseRegister, handleShow } = useProps();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const CloseRegistro = () => {
     handleCloseRegister();
   };
-  const abrirLogin = (e) => {
-    e.preventDefault();
+  const abrirLogin = () => {
     handleCloseRegister();
     handleShow();
+  };
+
+  const onSubmit = async (data) => {
+  try {
+    const nuevoUsuario = {
+      nombre: data.nombre,
+      email: data.email,
+      password: data.password,
+    };
+    
+    const respuesta = await registerUserAPI(nuevoUsuario);
+    const datos = await respuesta.json();
+    
+    // Validar si la respuesta falló
+    if (!respuesta.ok) {
+      return Swal.fire({
+        title: "Ocurrió un error",
+        text: datos?.mensaje || datos?.error || "No se pudo completar el registro.",
+        icon: "error",
+      });
+    }
+    
+    // Si todo salió bien
+    Swal.fire({
+      title: "¡Bienvenido!",
+      text: "Te registraste correctamente.",
+      icon: "success",
+      timer: 2000,
+      showConfirmButton: false,
+      timerProgressBar: true
+    });
+    
+    reset();
+    navegacion("/");
+    
+  } catch (error) {
+    console.error("Error en registro:", error);
+    Swal.fire({
+      title: "Error de conexión",
+      text: "No se pudo conectar con el servidor.",
+      icon: "error",
+    });
   }
+};
 
   return (
     <>
-      <Modal show={showRegister} onHide={handleCloseRegister}>
+      <Modal show={showRegister} onHide={CloseRegistro}>
         <Modal.Body>
           <div>
             <div className="d-flex flex-column align-items-center justify-content-center mb-4">
@@ -28,13 +79,23 @@ export const ModalRegister = () => {
               </span>
             </div>
 
-            <Form onSubmit={handleSubmit} className="Css-Form-Modal">
+            <Form onSubmit={handleSubmit(onSubmit)} className="Css-Form-Modal">
               <Form.Group className="mb-3" controlId="formNombre">
                 <Form.Label>Nombre Completo</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ingresa tu nombre"
-                  required
+                  {...register("nombre", {
+                    required: "El nombre es obligatorio",
+                    minLength: {
+                      value: 5,
+                      message: "El nombre debe tener al menos 3 caracteres",
+                    },
+                    maxLength: {
+                      value: 25,
+                      message: "El nombre no debe exceder los 50 caracteres",
+                    },
+                  })}
                 />
               </Form.Group>
 
@@ -43,8 +104,27 @@ export const ModalRegister = () => {
                 <Form.Control
                   type="email"
                   placeholder="tu@email.com"
-                  required
+                  {...register("email", {
+                    required: "El email es obligatorio",
+                    minLength: {
+                      value: 5,
+                      message: "El email debe tener al menos 5 caracteres",
+                    },
+                    maxLength: {
+                      value: 25,
+                      message: "El email no debe exceder los 25 caracteres",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "El email no es válido",
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <Form.Text className="text-danger">
+                    {errors.email.message}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPassword">
@@ -52,8 +132,25 @@ export const ModalRegister = () => {
                 <Form.Control
                   type="password"
                   placeholder="••••••••••"
-                  required
+                  {...register("password", {
+                    required: "La contraseña es obligatoria",
+                    minLength: {
+                      value: 8,
+                      message: "La contraseña debe tener al menos 8 caracteres",
+                    },
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{8,}$/,
+                      message:
+                        "La contraseña debe tener al menos 8 caracteres, incluyendo letras y números",
+                    },
+                  })}
                 />
+                {errors.password && (
+                  <Form.Text className="text-danger">
+                    {errors.password.message}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Button type="submit" className="w-100 css-btn-primary">
@@ -72,7 +169,11 @@ export const ModalRegister = () => {
           </div>
         </Modal.Body>
         <Modal.Footer className="p-0 d-flex justify-content-center align-content-center">
-          <Button variant="secondary" onClick={handleCloseRegister} className=" shadow-lg">
+          <Button
+            variant="secondary"
+            onClick={CloseRegistro}
+            className=" shadow-lg"
+          >
             Cerrar
           </Button>
         </Modal.Footer>

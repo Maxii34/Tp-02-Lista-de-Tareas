@@ -37,17 +37,18 @@ export const ModalLogin = ({ setUserLogged }) => {
     }
 
     const respuesta = await loginUserAPI(data);
-    if (respuesta && respuesta.status === 200) {
+    console.log(respuesta);
+    if (respuesta.status === 200) {
       const resultado = await respuesta.json();
-
+      console.log(resultado);
       const usuarioData = {
-        nombre: resultado.nombre,
-        email: resultado.email,
+        nombre: resultado.usuario.nombre,
+        email: resultado.usuario.email,
+        rol: resultado.usuario.rol,
         token: resultado.token,
-        tipo: resultado.tipo,
       };
       setUserLogged(usuarioData);
-      sessionStorage.setItem("usuarioLogueado", JSON.stringify(usuarioData));
+      sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioData));
 
       Swal.fire({
         title: "¡Bienvenido!",
@@ -60,7 +61,7 @@ export const ModalLogin = ({ setUserLogged }) => {
       reset();
       handleClose();
 
-      if (usuarioData.tipo === "Admin") {
+      if (usuarioData.rol === "Admin" || usuarioData.rol === "usuario") {
         navigate("");
       } else {
         navigate("/tareas");
