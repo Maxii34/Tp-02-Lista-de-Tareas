@@ -4,8 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { useProps } from "../context/PropsContext";
 import { Link } from "react-router";
 
-
-export const Menu = () => {
+export const Menu = ({ userLogged }) => {
   const { handleShow, handleShowRegister } = useProps();
   const abrirModal = (e) => {
     e.preventDefault();
@@ -15,6 +14,14 @@ export const Menu = () => {
     e.preventDefault();
     handleShowRegister();
   };
+
+  const isAuthenticated = !!userLogged?.token;
+  //const isAdmin = userLogged && userLogged?.role === "admin";
+  const isUser = userLogged && userLogged?.role === "usuario";
+  const cerrarSesion = () => {
+    userLogged({})
+  }
+
 
   return (
     <Navbar expand="lg" className="css py-3 shadow-sm">
@@ -38,23 +45,29 @@ export const Menu = () => {
             >
               <i className="bi bi-card-checklist me-1"></i> Tareas
             </Link>
+            {!isAuthenticated ? (
+              <>
             <Nav.Link
               onClick={abrirModal}
               className="text-white fs-6 mx-1 text-decoration-none"
             >
               <i className="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
             </Nav.Link>
-            <Nav.Link
-              onClick={Register}
-              className="text-white fs-6 mx-1 text-decoration-none"
-            >
-              <i className="bi bi-person-add me-1"></i> Registrarse
-            </Nav.Link>
-            <Link
-              className="text-white fs-6 mx-1 text-decoration-none"
-            >
-              <i className="bi bi-door-closed me-1"></i> Cerrar Sesión
-            </Link>
+              <Nav.Link
+                onClick={Register}
+                className="text-white fs-6 mx-1 text-decoration-none"
+              >
+                <i className="bi bi-person-add me-1"></i> Registrarse
+              </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link
+                onClick={handleLogout} // Necesitas una función para cerrar sesión
+                className="text-white fs-6 mx-1 text-decoration-none" onSubmit={cerrarSesion}
+              >
+                <i className="bi bi-door-closed me-1"></i> Cerrar Sesión
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

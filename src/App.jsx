@@ -48,6 +48,7 @@ function App() {
                   handleShow={handleShow}
                   handleShowEditar={handleShowEditar}
                   setTareaSeleccionada={setTareaSeleccionada}
+                  userLogged={userLogged}
                 />
               }
             />

@@ -4,10 +4,11 @@ export const Inicio = ({
   setTareaSeleccionada,
   handleShow,
   handleShowEditar,
+  userLogged
 }) => {
   return (
     <>
-      <Menu />
+      <Menu userLogged={userLogged} />
         <main className="container-fluid my-3">
           <GestorTareas
             setTareaSeleccionada={setTareaSeleccionada}
