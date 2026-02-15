@@ -15,11 +15,11 @@ export const loginUserAPI = async (usuario) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(usuario),
-    })
-    return respuesta
+    });
+    return respuesta;
   } catch (error) {
-    console.error(error)
-    return null
+    console.error(error);
+    return null;
   }
 };
 
@@ -32,10 +32,10 @@ export const registerUserAPI = async (nuevoUsuario) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(nuevoUsuario),
-    })
-    return respuesta
+    });
+    return respuesta;
   } catch (error) {
-    console.error(error)
-    return null
+    console.error(error);
+    return null;
   }
-}
+};

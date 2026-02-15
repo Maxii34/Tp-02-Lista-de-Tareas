@@ -3,7 +3,7 @@ import { useProps } from "../context/PropsContext";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { loginUserAPI } from "../../helpers/queries";
+import { loginUserAPI } from "../../helpers/usuarios.queries";
 
 export const ModalLogin = ({ setUserLogged }) => {
   const { show, handleClose, handleShowRegister } = useProps();
@@ -22,57 +22,63 @@ export const ModalLogin = ({ setUserLogged }) => {
     handleShowRegister();
   };
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    // 1. Validación de campos vacíos
     if (!data.email.trim() || !data.password.trim()) {
-      Swal.fire({
+      Toast.fire({
+        icon: "warning",
         title: "Campos incompletos",
-        text: "Email y contraseña son requeridos.",
-        icon: "error",
-        timer: 2000,
-        showConfirmButton: false,
+        text: "Por favor, rellena todos los datos.",
       });
       return;
     }
 
     const respuesta = await loginUserAPI(data);
-    console.log(respuesta);
+
     if (respuesta.status === 200) {
       const resultado = await respuesta.json();
-      console.log(resultado);
+
+      // Guardamos los datos del usuario
       const usuarioData = {
-        nombre: resultado.usuario.nombre,
+        nombre: resultado.usuario.nombreCompleto, 
         email: resultado.usuario.email,
         rol: resultado.usuario.rol,
         token: resultado.token,
       };
+
       setUserLogged(usuarioData);
       sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioData));
 
-      Swal.fire({
-        title: "¡Bienvenido!",
-        text: "Has iniciado sesión correctamente.",
+      // Notificación de éxito lateral
+      Toast.fire({
         icon: "success",
-        timer: 2500,
-        showConfirmButton: false,
-        timerProgressBar: true,
+        title: `¡Bienvenido, ${usuarioData.nombreCompleto}!`,
       });
+
       reset();
       handleClose();
 
-      if (usuarioData.rol === "Admin" || usuarioData.rol === "usuario") {
-        navigate("");
-      } else {
-        navigate("/tareas");
-      }
+      // 2. Lógica de redirección según Rol
     } else {
-      Swal.fire({
-        title: "Error al iniciar sesión",
-        text: "Revisa tu email y contraseña e intenta nuevamente.",
+      // 3. Notificación de error lateral
+      Toast.fire({
         icon: "error",
-        timer: 3000,
-        showConfirmButton: false,
+        title: "Error de acceso",
+        text: "Email o contraseña incorrectos.",
       });
     }
   };

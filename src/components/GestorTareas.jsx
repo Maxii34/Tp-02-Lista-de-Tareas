@@ -2,8 +2,8 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { crearTarea } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
+import { crearTarea } from "../helpers/tareas.queries";
 
 export const GestorTareas = ({
   setTareaSeleccionada,

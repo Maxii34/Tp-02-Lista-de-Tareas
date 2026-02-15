@@ -1,8 +1,8 @@
 import { Badge, Button, CardFooter } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Swal from "sweetalert2";
-import { borrarTareaAPI } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
+import { borrarTareaAPI } from "../helpers/tareas.queries";
 
 export const TareasCards = ({
   itemTarea,

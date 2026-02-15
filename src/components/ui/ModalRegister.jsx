@@ -2,9 +2,8 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { useProps } from "../context/PropsContext";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
-import { registerUserAPI } from "../../helpers/queries";
 import Swal from "sweetalert2";
-
+import { registerUserAPI } from "../../helpers/usuarios.queries";
 
 export const ModalRegister = () => {
   const { showRegister, handleCloseRegister, handleShow } = useProps();
@@ -23,48 +22,60 @@ export const ModalRegister = () => {
     handleShow();
   };
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   const onSubmit = async (data) => {
-  try {
-    const nuevoUsuario = {
-      nombre: data.nombre,
-      email: data.email,
-      password: data.password,
-    };
-    
-    const respuesta = await registerUserAPI(nuevoUsuario);
-    const datos = await respuesta.json();
-    
-    // Validar si la respuesta falló
-    if (!respuesta.ok) {
-      return Swal.fire({
-        title: "Ocurrió un error",
-        text: datos?.mensaje || datos?.error || "No se pudo completar el registro.",
+    try {
+      const nuevoUsuario = {
+        nombreCompleto: data.nombreCompleto,
+        email: data.email,
+        password: data.password,
+      };
+
+      const respuesta = await registerUserAPI(nuevoUsuario);
+      const datos = await respuesta.json();
+
+      // Validar si la respuesta falló
+      if (!respuesta.ok) {
+        return Toast.fire({
+          icon: "error",
+          title: "Ocurrió un error",
+          text:
+            datos?.mensaje ||
+            datos?.error ||
+            "No se pudo completar el registro.",
+        });
+      }
+
+      // Si todo salió bien
+      Toast.fire({
+        icon: "success",
+        title: "¡Bienvenido!",
+        text: "Te registraste correctamente.",
+      });
+
+      reset();
+      CloseRegistro()
+      //navegacion("/");
+    } catch (error) {
+      console.error("Error en registro:", error);
+      Toast.fire({
         icon: "error",
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
       });
     }
-    
-    // Si todo salió bien
-    Swal.fire({
-      title: "¡Bienvenido!",
-      text: "Te registraste correctamente.",
-      icon: "success",
-      timer: 2000,
-      showConfirmButton: false,
-      timerProgressBar: true
-    });
-    
-    reset();
-    navegacion("/");
-    
-  } catch (error) {
-    console.error("Error en registro:", error);
-    Swal.fire({
-      title: "Error de conexión",
-      text: "No se pudo conectar con el servidor.",
-      icon: "error",
-    });
-  }
-};
+  };
 
   return (
     <>
@@ -85,7 +96,7 @@ export const ModalRegister = () => {
                 <Form.Control
                   type="text"
                   placeholder="Ingresa tu nombre"
-                  {...register("nombre", {
+                  {...register("nombreCompleto", {
                     required: "El nombre es obligatorio",
                     minLength: {
                       value: 5,
@@ -97,6 +108,11 @@ export const ModalRegister = () => {
                     },
                   })}
                 />
+                {errors.nombreCompleto && (
+                  <Form.Text className="text-danger">
+                    {errors.nombreCompleto.message}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formEmail">

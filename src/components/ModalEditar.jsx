@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
-import { editarTareaAPI } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
+import { editarTareaAPI } from "../helpers/tareas.queries";
 
 
 export const ModalEditar = ({

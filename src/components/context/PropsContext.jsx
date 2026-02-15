@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { listarTareas } from "../../helpers/queries";
+import { listarTareas } from "../../helpers/tareas.queries";
 
 const propsContext = createContext();
 
