@@ -18,16 +18,14 @@ export const Menu = ({ userLogged, setUserLogged }) => {
     handleShowRegister();
   };
 
-
   //
   const isAuthenticated = !!userLogged?.token;
   //const isAdmin = userLogged && userLogged?.role === "admin";
   const isUser = userLogged && userLogged?.role === "usuario";
 
   const cerrarSesion = () => {
-    setUserLogged({})
-  }
-
+    setUserLogged({});
+  };
 
   return (
     <Navbar expand="lg" className="css py-3 shadow-sm">
@@ -45,6 +43,10 @@ export const Menu = ({ userLogged, setUserLogged }) => {
             >
               <i className="bi bi-house-door me-1"></i> Bienvenido
             </Link>
+            <Link className="text-white fs-6 mx-1 text-decoration-none">
+              <i className="bi bi-person me-1"></i>{" "}
+              {userLogged.email || "Email desconocido"}
+            </Link>
             <Link
               to="/tareas"
               className="text-white fs-6 mx-1 text-decoration-none"
@@ -53,23 +55,25 @@ export const Menu = ({ userLogged, setUserLogged }) => {
             </Link>
             {!isAuthenticated ? (
               <>
-            <Nav.Link
-              onClick={abrirModal}
-              className="text-white fs-6 mx-1 text-decoration-none"
-            >
-              <i className="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
-            </Nav.Link>
-              <Nav.Link
-                onClick={Register}
-                className="text-white fs-6 mx-1 text-decoration-none"
-              >
-                <i className="bi bi-person-add me-1"></i> Registrarse
-              </Nav.Link>
+                <Nav.Link
+                  onClick={abrirModal}
+                  className="text-white fs-6 mx-1 text-decoration-none"
+                >
+                  <i className="bi bi-box-arrow-in-right me-1"></i> Iniciar
+                  Sesión
+                </Nav.Link>
+                <Nav.Link
+                  onClick={Register}
+                  className="text-white fs-6 mx-1 text-decoration-none"
+                >
+                  <i className="bi bi-person-add me-1"></i> Registrarse
+                </Nav.Link>
               </>
             ) : (
               <Nav.Link
                 onClick={cerrarSesion}
-                className="text-white fs-6 mx-1 text-decoration-none" onSubmit={cerrarSesion}
+                className="text-white fs-6 mx-1 text-decoration-none"
+                onSubmit={cerrarSesion}
               >
                 <i className="bi bi-door-closed me-1"></i> Cerrar Sesión
               </Nav.Link>
