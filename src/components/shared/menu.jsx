@@ -4,8 +4,11 @@ import Navbar from "react-bootstrap/Navbar";
 import { useProps } from "../context/PropsContext";
 import { Link } from "react-router";
 
-export const Menu = ({ userLogged }) => {
+export const Menu = ({ userLogged, setUserLogged }) => {
+  //Estado para modal de context
   const { handleShow, handleShowRegister } = useProps();
+
+  //Funciones para abrir y cerrar el modal registro.
   const abrirModal = (e) => {
     e.preventDefault();
     handleShow();
@@ -15,11 +18,14 @@ export const Menu = ({ userLogged }) => {
     handleShowRegister();
   };
 
+
+  //
   const isAuthenticated = !!userLogged?.token;
   //const isAdmin = userLogged && userLogged?.role === "admin";
   const isUser = userLogged && userLogged?.role === "usuario";
+
   const cerrarSesion = () => {
-    userLogged({})
+    setUserLogged({})
   }
 
 
@@ -62,7 +68,7 @@ export const Menu = ({ userLogged }) => {
               </>
             ) : (
               <Nav.Link
-                onClick={handleLogout} // Necesitas una función para cerrar sesión
+                onClick={cerrarSesion}
                 className="text-white fs-6 mx-1 text-decoration-none" onSubmit={cerrarSesion}
               >
                 <i className="bi bi-door-closed me-1"></i> Cerrar Sesión

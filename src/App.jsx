@@ -14,7 +14,9 @@ function App() {
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
   const sesionIniciada = JSON.parse(sessionStorage.getItem("usuarioLogueado")) || {};
+  
   const [userLogged, setUserLogged] = useState(sesionIniciada);
+
   useEffect(() => {
     sessionStorage.setItem("usuarioLogueado", JSON.stringify(userLogged));
   }, [userLogged]);
@@ -49,6 +51,7 @@ function App() {
                   handleShowEditar={handleShowEditar}
                   setTareaSeleccionada={setTareaSeleccionada}
                   userLogged={userLogged}
+                  setUserLogged={setUserLogged}
                 />
               }
             />
