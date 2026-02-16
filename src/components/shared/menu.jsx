@@ -43,10 +43,6 @@ export const Menu = ({ userLogged, setUserLogged }) => {
             >
               <i className="bi bi-house-door me-1"></i> Bienvenido
             </Link>
-            <Link className="text-white fs-6 mx-1 text-decoration-none">
-              <i className="bi bi-person me-1"></i>{" "}
-              {userLogged.email || "Email desconocido"}
-            </Link>
             <Link
               to="/tareas"
               className="text-white fs-6 mx-1 text-decoration-none"
