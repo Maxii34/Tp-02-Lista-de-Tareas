@@ -14,6 +14,8 @@ export const ModalLogin = ({ setUserLogged }) => {
     formState: { errors },
   } = useForm();
 
+  const { obtenerTareas } = useProps();
+
   const cerrarModal = () => {
     handleClose();
   };
@@ -34,7 +36,11 @@ export const ModalLogin = ({ setUserLogged }) => {
     },
   });
 
-  const navigate = useNavigate();
+  const redirecion = useNavigate();
+
+  const roles = ()=>{
+    redirecion("/tareas")
+  };
 
   const onSubmit = async (data) => {
     // 1. Validación de campos vacíos
@@ -70,9 +76,9 @@ export const ModalLogin = ({ setUserLogged }) => {
       });
 
       reset();
-      handleClose();
-
-      // 2. Lógica de redirección según Rol
+      handleClose(); //cierra
+      obtenerTareas() //obtiene las tareas antes de rediridir
+      roles() //Redirigue segun el rol
     } else {
       // 3. Notificación de error lateral
       Toast.fire({

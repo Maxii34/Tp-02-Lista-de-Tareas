@@ -2,11 +2,15 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useProps } from "../context/PropsContext";
-import { Link } from "react-router";
+import { Link, useNavigate, } from "react-router";
+
 
 export const Menu = ({ userLogged, setUserLogged }) => {
   //Estado para modal de context
   const { handleShow, handleShowRegister } = useProps();
+
+  const navegacion = useNavigate()
+  const { setTareas } = useProps()
 
   //Funciones para abrir y cerrar el modal registro.
   const abrirModal = (e) => {
@@ -25,6 +29,8 @@ export const Menu = ({ userLogged, setUserLogged }) => {
 
   const cerrarSesion = () => {
     setUserLogged({});
+    setTareas({})
+    navegacion("/inicio")
   };
 
   return (
@@ -69,7 +75,6 @@ export const Menu = ({ userLogged, setUserLogged }) => {
               <Nav.Link
                 onClick={cerrarSesion}
                 className="text-white fs-6 mx-1 text-decoration-none"
-                onSubmit={cerrarSesion}
               >
                 <i className="bi bi-door-closed me-1"></i> Cerrar Sesión
               </Nav.Link>

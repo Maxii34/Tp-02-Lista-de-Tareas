@@ -28,7 +28,12 @@ export const crearTarea = async (tareas) => {
 //funcion para solicitar para listar tareas
 export const listarTareas = async () => {
   try {
-    const respuesta = await fetch(tareasBackend);
+    const respuesta = await fetch(tareasBackend, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${obtenerToken()}`,
+      },
+    });
     console.log(respuesta);
     return respuesta;
   } catch (error) {

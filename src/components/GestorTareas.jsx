@@ -83,7 +83,7 @@ export const GestorTareas = ({
                 </div>
                 <Form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="card p-1 bg-primary-subtle "
+                  className="card p-1 bg-primary-subtle"
                 >
                   {/* Input título */}
                   <InputGroup>
@@ -159,17 +159,17 @@ export const GestorTareas = ({
                       {errors.prioridad.message}
                     </Form.Text>
                   )}
+                  <div className=" d-block justify-content-center align-content-center">
+                    <Button
+                      variant="info"
+                      size="sm"
+                      className="shadow mt-4 w-100"
+                      type="submit"
+                    >
+                      <i className="bi bi-list-task"></i> Añadir nueva tarea..
+                    </Button>
+                  </div>
                 </Form>
-                <div className=" d-block justify-content-center align-content-center">
-                  <Button
-                    variant="info"
-                    size="sm"
-                    className="shadow mt-4 w-100"
-                    type="submit"
-                  >
-                    <i className="bi bi-list-task"></i> Añadir nueva tarea..
-                  </Button>
-                </div>
               </Card.Body>
             </Card>
 
