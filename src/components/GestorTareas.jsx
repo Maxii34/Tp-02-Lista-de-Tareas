@@ -2,9 +2,8 @@ import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import { Tablero } from "./Tablero";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { crearTarea } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
-
+import { crearTarea } from "../helpers/tareas.queries";
 
 export const GestorTareas = ({
   setTareaSeleccionada,
@@ -18,32 +17,51 @@ export const GestorTareas = ({
     formState: { errors },
   } = useForm();
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   const { obtenerTareas } = useProps();
 
   const onSubmit = async (data) => {
-    //Validacion
+    // Validación
     if (!data.titulo.trim() || !data.descripcion.trim()) {
-      Swal.fire({
-      title: "Campos incompletos",
-      text: "Titulo y descripción son requeridos.",
-      icon: "error",
-    });
-    return
-    } 
-    //Crear tarea
-    const respuesta = await crearTarea(data);
+      Toast.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Por favor, rellena todos los datos.",
+      });
+      return;
+    }
+
+    const tareaCompleta = {
+      titulo: data.titulo,
+      descripcion: data.descripcion,
+      estado: "pendiente",
+    };
+
+    const respuesta = await crearTarea(tareaCompleta);
+
     if (respuesta.status === 201) {
-      Swal.fire({
-        title: `¡Creaste una tarea!`,
-        text: `Has creado una tarea ${data.titulo} exitosamente.`,
+      Toast.fire({
         icon: "success",
+        title: "¡Creaste una tarea!",
+        html: `Has creado la tarea <b style="color: #28a745;">"${data.titulo}"</b> exitosamente.`,
       });
       obtenerTareas();
       reset();
     } else {
-      Swal.fire({
+      Toast.fire({
         title: "Error al crear la tarea",
-        text: "Titulo o descripción no válidos.",
+        text: respuesta.mensaje || "Por favor verifica los datos.",
         icon: "error",
       });
     }
@@ -63,7 +81,10 @@ export const GestorTareas = ({
                     <i className="bi bi-inboxes"></i> Bandeja De Entrada
                   </span>
                 </div>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="card p-1 bg-primary-subtle"
+                >
                   {/* Input título */}
                   <InputGroup>
                     <Form.Control
@@ -76,9 +97,9 @@ export const GestorTareas = ({
                           message: "El titulo debe tener al menos 5 caracteres",
                         },
                         maxLength: {
-                          value: 25,
+                          value: 50,
                           message:
-                            "El titulo no debe superar los 25 caracteres",
+                            "El titulo no debe superar los 50 caracteres",
                         },
                       })}
                     />
@@ -98,14 +119,14 @@ export const GestorTareas = ({
                       {...register("descripcion", {
                         required: "La descripción es obligatoria",
                         minLength: {
-                          value: 5,
+                          value: 10,
                           message:
-                            "La descripción debe tener al menos 5 caracteres",
+                            "La descripción debe tener al menos 10 caracteres",
                         },
                         maxLength: {
-                          value: 100,
+                          value: 500,
                           message:
-                            "La descripción no debe superar los 100 caracteres",
+                            "La descripción no debe superar los 500 caracteres",
                         },
                       })}
                     />
@@ -115,14 +136,37 @@ export const GestorTareas = ({
                       {errors.descripcion.message}
                     </Form.Text>
                   )}
-                  <div className="d-flex justify-content-end">
+
+                  {/* Select Prioridad */}
+                  <InputGroup className="mt-2">
+                    <InputGroup.Text>Prioridad</InputGroup.Text>
+                    <Form.Select
+                      defaultValue=""
+                      {...register("prioridad", {
+                        required: "Por favor, selecciona una prioridad",
+                      })}
+                    >
+                      <option value="" disabled>
+                        Selecciona prioridad
+                      </option>
+                      <option value="baja">Baja</option>
+                      <option value="media">Media</option>
+                      <option value="alta">Alta</option>
+                    </Form.Select>
+                  </InputGroup>
+                  {errors.prioridad && (
+                    <Form.Text className="text-danger">
+                      {errors.prioridad.message}
+                    </Form.Text>
+                  )}
+                  <div className=" d-block justify-content-center align-content-center">
                     <Button
-                      variant="info"
+                      variant="primary"
                       size="sm"
-                      className="shadow mt-2"
+                      className="shadow mt-4 w-100"
                       type="submit"
                     >
-                      <i className="bi bi-list-task"></i> Añadir tarea
+                      <i className="bi bi-list-task"></i> Añadir nueva tarea..
                     </Button>
                   </div>
                 </Form>

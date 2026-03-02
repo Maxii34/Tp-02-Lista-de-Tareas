@@ -4,12 +4,24 @@ import {
   Bienvenido,
   ModalTarea,
   ModalEditar,
+  ModalLogin,
+  ModalRegister
 } from "./components/index";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { PropsProvider } from "./components/context/PropsContext";
 
 function App() {
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
+
+  const sesionIniciada = JSON.parse(sessionStorage.getItem("usuarioLogueado")) || {};
+  
+  const [userLogged, setUserLogged] = useState(sesionIniciada);
+
+  useEffect(() => {
+    sessionStorage.setItem("usuarioLogueado", JSON.stringify(userLogged));
+  }, [userLogged]);
+    
+
 
   //Estados y funciones para el modal de ver
   const [show, setShow] = useState(false);
@@ -38,6 +50,8 @@ function App() {
                   handleShow={handleShow}
                   handleShowEditar={handleShowEditar}
                   setTareaSeleccionada={setTareaSeleccionada}
+                  userLogged={userLogged}
+                  setUserLogged={setUserLogged}
                 />
               }
             />
@@ -55,6 +69,8 @@ function App() {
             show={showEditar}
             tareaSeleccionada={tareaSeleccionada}
           />
+          <ModalLogin setUserLogged={setUserLogged}/>
+          <ModalRegister/>
         </BrowserRouter>
       </PropsProvider>
     </>

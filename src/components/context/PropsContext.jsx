@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react"; 
-import { listarTareas } from "../../helpers/queries";
+import { createContext, useContext, useEffect, useState } from "react";
+import { listarTareas } from "../../helpers/tareas.queries";
 
 const propsContext = createContext();
 
@@ -31,6 +31,14 @@ export const PropsProvider = ({ children }) => {
     }
   };
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [showRegister, setShowRegister] = useState(false);
+  const handleCloseRegister = () => setShowRegister(false);
+  const handleShowRegister = () => setShowRegister(true);
+
   return (
     <propsContext.Provider
       value={{
@@ -38,6 +46,12 @@ export const PropsProvider = ({ children }) => {
         tareas,
         setTareas,
         obtenerTareas,
+        show,
+        handleClose,
+        handleShow,
+        showRegister,
+        handleCloseRegister,
+        handleShowRegister,
       }}
     >
       {children}

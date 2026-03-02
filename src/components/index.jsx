@@ -7,3 +7,5 @@ export * from "../components/Tablero";
 export * from "../components/TareasCards";
 export * from "../components/ModalTarea"
 export * from "../components/ModalEditar"
+export * from "./ui/ModalLogin"
+export * from "./ui/ModalRegister"

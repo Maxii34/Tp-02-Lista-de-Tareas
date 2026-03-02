@@ -1,38 +1,45 @@
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { Button, Modal, Form, InputGroup, Row, Col } from "react-bootstrap"; // Importamos Form e InputGroup
 import Swal from "sweetalert2";
-import { editarTareaAPI } from "../helpers/queries";
 import { useProps } from "./context/PropsContext";
+import { editarTareaAPI } from "../helpers/tareas.queries";
 
-
-export const ModalEditar = ({
-  show,
-  handleClose,
-  tareaSeleccionada,
-}) => {
-  //Inicia la logica
+export const ModalEditar = ({ show, handleClose, tareaSeleccionada }) => {
   const { obtenerTareas } = useProps();
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [prioridad, setPrioridad] = useState("");
+  const [estado, setEstado] = useState("");
 
-  // useEffect para cargar los datos de la tarea seleccionada al abrir el modal
   useEffect(() => {
     if (tareaSeleccionada) {
       setTitulo(tareaSeleccionada.titulo);
       setDescripcion(tareaSeleccionada.descripcion);
+      setPrioridad(tareaSeleccionada.prioridad);
+      setEstado(tareaSeleccionada.estado); 
     }
   }, [tareaSeleccionada]);
 
+  //funcion de editar tarea
   const guardarTareaEditada = async () => {
-    // Validación simple
-    if (!titulo.trim() || !descripcion.trim()) {
-      Swal.fire({
-        title: "Campos vacíos",
-        text: "Por favor completa todos los campos",
+    if (!titulo.trim() || !descripcion.trim() || !prioridad || !estado) {
+      Toast.fire({
+        title: "Campos incompletos",
+        text: "Por favor completa todos los campos, incluyendo la prioridad e estado!",
         icon: "warning",
-        confirmButtonColor: "#f39c12",
       });
       return;
     }
@@ -40,59 +47,125 @@ export const ModalEditar = ({
     const tareaActualizada = {
       titulo: titulo.trim(),
       descripcion: descripcion.trim(),
+      prioridad: prioridad,
+      estado: estado,
     };
 
-    // Llamar a la API para actualizar
     const respuesta = await editarTareaAPI(
       tareaSeleccionada._id,
-      tareaActualizada
+      tareaActualizada,
     );
 
     if (respuesta?.status === 200) {
-      Swal.fire({
+      Toast.fire({
         title: "¡Éxito!",
         text: "Tarea actualizada correctamente",
         icon: "success",
-        confirmButtonColor: "#28a745",
       });
-      obtenerTareas(); // Refrescar la lista de tareas
-      handleClose(); // Cerrar el modal
+      obtenerTareas();
+      handleClose();
     } else {
-      Swal.fire({
+      Toast.fire({
         title: "Error",
         text: "No se pudo actualizar la tarea",
         icon: "error",
-        confirmButtonColor: "#d33",
       });
     }
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Editar tarea</Modal.Title>
+    <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton className="bg-dark text-light">
+        <Modal.Title>Editar Tarea</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <label>Título:</label>
-        <input
-          type="text"
-          className="form-control mb-2"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-        />
-        <label>Descripción:</label>
-        <textarea
-          className="form-control"
-          rows="4"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
+        <Form>
+          {/* Campo Título */}
+          <Form.Group className="mb-3">
+            <Form.Label>Título</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Ej: Comprar materiales"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+            />
+          </Form.Group>
+
+          {/* Campo Descripción */}
+          <Form.Group className="mb-3">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+            />
+          </Form.Group>
+
+          <Row>
+            <Col md={6}>
+              {/* Campo Prioridad con Select mejorado */}
+              <Form.Group className="mb-3">
+                <Form.Label>Prioridad</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <i className="bi bi-flag-fill"></i>
+                  </InputGroup.Text>
+                  <Form.Select
+                    value={prioridad}
+                    onChange={(e) => setPrioridad(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Selecciona --
+                    </option>
+                    <option value="baja">Baja</option>
+                    <option value="media">Media</option>
+                    <option value="alta">Alta</option>
+                  </Form.Select>
+                </InputGroup>
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              {/* Campo Prioridad con Select mejorado */}
+              <Form.Group className="mb-3">
+                <Form.Label>Estado Tarea</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <i className="bi bi-flag-fill"></i>
+                  </InputGroup.Text>
+                  <Form.Select
+                    value={estado}
+                    onChange={(e) => setEstado(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Selecciona --
+                    </option>
+                    <option value="pendiente">pendiente</option>
+                    <option value="en_proceso">en_proceso</option>
+                    <option value="bloqueada">bloqueada</option>
+                    <option value="completada">completada</option>
+                    <option value="cancelada">cancelada</option>
+                  </Form.Select>
+                </InputGroup>
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleClose}>
+        <Button
+          variant="outline-danger"
+          className=" shadow-lg"
+          onClick={handleClose}
+        >
           Cancelar
         </Button>
-        <Button variant="success" onClick={guardarTareaEditada}>
+        <Button
+          variant="primary"
+          className=" shadow-lg"
+          onClick={guardarTareaEditada}
+        >
           Guardar cambios
         </Button>
       </Modal.Footer>
