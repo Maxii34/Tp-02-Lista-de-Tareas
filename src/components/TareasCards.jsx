@@ -11,7 +11,6 @@ export const TareasCards = ({
 }) => {
   const { obtenerTareas } = useProps();
 
-  // Configuración del Toast (puedes moverlo a un helper si quieres)
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -35,6 +34,14 @@ export const TareasCards = ({
     media: "warning",
     baja: "success",
   };
+
+  const borderColorPrioridad = {
+    alta: "#dc3545",
+    media: "#ffc107",
+    baja: "#198754",
+  };
+
+  const borderColor = borderColorPrioridad[itemTarea.prioridad?.toLowerCase()] || "#dee2e6";
 
   const eliminarTarea = () => {
     Swal.fire({
@@ -67,14 +74,13 @@ export const TareasCards = ({
 
   return (
     <Card
-      className="h-100 border rounded-3 tareasCard shadow"
+      className="h-100 rounded-3 tareasCard shadow"
       style={{
-        border: "1px solid #dee2e6", 
+        borderLeft: `4px solid ${borderColor}`,
         transition: "transform 0.2s, shadow 0.2s",
       }}
     >
       <Card.Header className="bg-light border-bottom border-light pt-3 pb-2 d-flex justify-content-between align-items-start">
-        {/* Badge de prioridad con el color dinámico */}
         <Badge
           bg={colorPrioridad[itemTarea.prioridad?.toLowerCase()] || "secondary"}
           className="text-uppercase shadow-sm"
@@ -95,7 +101,7 @@ export const TareasCards = ({
           className="text-secondary small flex-grow-1"
           style={{
             display: "-webkit-box",
-            WebkitLineClamp: "3", // Muestra hasta 3 líneas antes de recortar
+            WebkitLineClamp: "3",
             WebkitBoxOrient: "vertical",
             overflow: "hidden",
             lineHeight: "1.5",
