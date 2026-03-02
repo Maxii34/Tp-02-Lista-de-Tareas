@@ -20,7 +20,7 @@ export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
     media: "warning",
     baja: "success",
   };
-
+  //Colores para estados
   const colorEstados = {
     pendiente: "secondary",
     en_proceso: "primary",

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Form, InputGroup } from "react-bootstrap"; // Importamos Form e InputGroup
+import { Button, Modal, Form, InputGroup, Row, Col } from "react-bootstrap"; // Importamos Form e InputGroup
 import Swal from "sweetalert2";
 import { useProps } from "./context/PropsContext";
 import { editarTareaAPI } from "../helpers/tareas.queries";
@@ -22,20 +22,23 @@ export const ModalEditar = ({ show, handleClose, tareaSeleccionada }) => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [prioridad, setPrioridad] = useState("");
+  const [estado, setEstado] = useState("");
 
   useEffect(() => {
     if (tareaSeleccionada) {
       setTitulo(tareaSeleccionada.titulo);
       setDescripcion(tareaSeleccionada.descripcion);
       setPrioridad(tareaSeleccionada.prioridad);
+      setEstado(tareaSeleccionada.estado); 
     }
   }, [tareaSeleccionada]);
 
+  //funcion de editar tarea
   const guardarTareaEditada = async () => {
-    if (!titulo.trim() || !descripcion.trim() || !prioridad) {
+    if (!titulo.trim() || !descripcion.trim() || !prioridad || !estado) {
       Toast.fire({
         title: "Campos incompletos",
-        text: "Por favor completa todos los campos, incluyendo la prioridad",
+        text: "Por favor completa todos los campos, incluyendo la prioridad e estado!",
         icon: "warning",
       });
       return;
@@ -45,6 +48,7 @@ export const ModalEditar = ({ show, handleClose, tareaSeleccionada }) => {
       titulo: titulo.trim(),
       descripcion: descripcion.trim(),
       prioridad: prioridad,
+      estado: estado,
     };
 
     const respuesta = await editarTareaAPI(
@@ -98,33 +102,70 @@ export const ModalEditar = ({ show, handleClose, tareaSeleccionada }) => {
             />
           </Form.Group>
 
-          {/* Campo Prioridad con Select mejorado */}
-          <Form.Group className="mb-3">
-            <Form.Label>Prioridad</Form.Label>
-            <InputGroup>
-              <InputGroup.Text>
-                <i className="bi bi-flag-fill"></i>
-              </InputGroup.Text>
-              <Form.Select
-                value={prioridad}
-                onChange={(e) => setPrioridad(e.target.value)}
-              >
-                <option value="" disabled>
-                  -- Selecciona --
-                </option>
-                <option value="baja">Baja</option>
-                <option value="media">Media</option>
-                <option value="alta">Alta</option>
-              </Form.Select>
-            </InputGroup>
-          </Form.Group>
+          <Row>
+            <Col md={6}>
+              {/* Campo Prioridad con Select mejorado */}
+              <Form.Group className="mb-3">
+                <Form.Label>Prioridad</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <i className="bi bi-flag-fill"></i>
+                  </InputGroup.Text>
+                  <Form.Select
+                    value={prioridad}
+                    onChange={(e) => setPrioridad(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Selecciona --
+                    </option>
+                    <option value="baja">Baja</option>
+                    <option value="media">Media</option>
+                    <option value="alta">Alta</option>
+                  </Form.Select>
+                </InputGroup>
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              {/* Campo Prioridad con Select mejorado */}
+              <Form.Group className="mb-3">
+                <Form.Label>Estado Tarea</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <i className="bi bi-flag-fill"></i>
+                  </InputGroup.Text>
+                  <Form.Select
+                    value={estado}
+                    onChange={(e) => setEstado(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Selecciona --
+                    </option>
+                    <option value="pendiente">pendiente</option>
+                    <option value="en_proceso">en_proceso</option>
+                    <option value="bloqueada">bloqueada</option>
+                    <option value="completada">completada</option>
+                    <option value="cancelada">cancelada</option>
+                  </Form.Select>
+                </InputGroup>
+              </Form.Group>
+            </Col>
+          </Row>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-danger" className=" shadow-lg" onClick={handleClose}>
+        <Button
+          variant="outline-danger"
+          className=" shadow-lg"
+          onClick={handleClose}
+        >
           Cancelar
         </Button>
-        <Button variant="primary" className=" shadow-lg" onClick={guardarTareaEditada}>
+        <Button
+          variant="primary"
+          className=" shadow-lg"
+          onClick={guardarTareaEditada}
+        >
           Guardar cambios
         </Button>
       </Modal.Footer>
