@@ -161,7 +161,7 @@ export const GestorTareas = ({
                   )}
                   <div className=" d-block justify-content-center align-content-center">
                     <Button
-                      variant="info"
+                      variant="primary"
                       size="sm"
                       className="shadow mt-4 w-100"
                       type="submit"

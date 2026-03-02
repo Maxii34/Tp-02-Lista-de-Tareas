@@ -2,7 +2,7 @@ import { Button, Modal, Badge, ListGroup, Stack } from "react-bootstrap";
 
 export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
   if (!tareaSeleccionada) return null;
-
+  console.log(tareaSeleccionada)
   // Función para formatear la fecha (opcional)
   const formatearFecha = (fecha) => {
     return new Date(fecha).toLocaleString("es-AR", {
@@ -20,14 +20,7 @@ export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
     media: "warning",
     baja: "success",
   };
-  //Colores para estados
-  const colorEstados = {
-    pendiente: "secondary",
-    en_proceso: "primary",
-    bloqueada: "danger",
-    completada: "success",
-    cancelada: "dark",
-  };
+  
 
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">
@@ -79,12 +72,10 @@ export const ModalTarea = ({ show, handleClose, tareaSeleccionada }) => {
               <h5 className="text-muted small text-uppercase fw-bold">
                 Estado
               </h5>
-              <Badge pill bg={colorEstados[tareaSeleccionada.estado?.toLowerCase()] || "secondary"}
+              <Badge pill bg={[tareaSeleccionada.estado?.toLowerCase().trim()] || "secondary"}
                 className="text-uppercase px-3 py-2"
               >
-                {tareaSeleccionada.estado
-                  ? tareaSeleccionada.estado.replace("_", " ")
-                  : "No definido"}
+                {tareaSeleccionada.estado || "No definido"}
               </Badge>
             </div>
           </div>

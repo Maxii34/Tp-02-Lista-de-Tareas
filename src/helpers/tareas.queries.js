@@ -17,7 +17,6 @@ export const crearTarea = async (tareas) => {
       },
       body: JSON.stringify(tareas),
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -34,7 +33,6 @@ export const listarTareas = async () => {
         Authorization: `Bearer ${obtenerToken()}`,
       },
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -53,7 +51,6 @@ export const editarTareaAPI = async (id, tareas) => {
       },
       body: JSON.stringify(tareas),
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -70,7 +67,6 @@ export const borrarTareaAPI = async (id) => {
         Authorization: `Bearer ${obtenerToken()}`,
       },
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);

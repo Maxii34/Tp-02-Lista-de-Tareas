@@ -119,9 +119,8 @@ footer {
   }
 }
 
-/* Botones personalizados para los estados*/
 /* Estado */
-.btn-success {
+.btn-custom-success {
   background-color: #198754;
   color: white;
   border: none;
@@ -132,14 +131,14 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-success:hover {
+.btn-custom-success:hover {
   background-color: #157347;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   transform: translateY(-1px);
 }
 
 /* Editar */
-.btn-primary {
+.btn-custom-edit {
   background-color: #ffc107;
   color: #ffffff;
   border: none;
@@ -150,7 +149,7 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-primary:hover {
+.btn-custom-edit:hover {
   background-color: #e0a800;
   color: #ffffff;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -158,7 +157,7 @@ footer {
 }
 
 /* Ver */
-.btn-info {
+.btn-custom-info {
   background-color: #0d6efd;
   color: #ffffff;
   border: none;
@@ -169,7 +168,7 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-info:hover {
+.btn-custom-info:hover {
   background-color: #0b5ed7;
   color: #ffffff;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -177,7 +176,7 @@ footer {
 }
 
 /* Borrar */
-.btn-danger {
+.btn-custom-danger {
   background-color: #dc3545;
   color: #ffffff;
   border: none;
@@ -188,7 +187,7 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-danger:hover {
+.btn-custom-danger:hover {
   background-color: #c82333;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   transform: translateY(-1px);
